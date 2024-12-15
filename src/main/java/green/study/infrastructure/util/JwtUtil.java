@@ -1,12 +1,10 @@
 package green.study.infrastructure.util;
 
-import green.study.domain.member.exceptions.ExpiredTokenException;
-import green.study.domain.member.exceptions.InvalidTokenException;
-import green.study.domain.member.model.Member;
-import green.study.domain.member.enums.MemberType;
-import io.jsonwebtoken.*;
+import green.study.domain.admin.model.Admin;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,57 +15,68 @@ import java.util.Date;
 
 @Component
 @Slf4j
-@Getter
 public class JwtUtil {
 
-    private final String secretKey;
-    private final SecretKey key;
+    @Value("${jwt.secret-key}")
+    private String secretKey;
 
-    public JwtUtil(@Value("${jwt.secret-key}") String secretKey) {
-        this.secretKey = secretKey;
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-    }
+    private SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
     Long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 24L; // 밀리세컨이라 1000 * 60초 * 60분 * 24시 => 하루
-    private static final String MEMBER_KEY_NAME = "key";
-    private static final String MEMBER_ID_KEY_NAME = "memberId";
-    private static final String MEMBER_TYPE_KEY_NAME = "type";
+    private static final String USER_NO_KEY_NAME = "no";
+    private final String USER_ID_KEY_NAME = "id";
 
     /**
-     * 만료시간에 대한 서비스 확장성을 위한 오버로딩 메서드 생성
+     * 액세스 토큰생성해주는 메서드
+     *   별일 없으면 이걸 사용하세요
      * @param loginUser
      * @return
      */
-    public String createAccessToken(final Member loginUser) {
+    public String createAccessToken(final Admin loginUser) {
         return this.createAccessToken(loginUser, EXPIRATION_TIME_MS);
     }
 
-    public String createAccessToken(final Member loginUser, final Long expirationTime) {
+    /**
+     * 액세스 토큰생성해주는 메서드 (만료시간을 파라미터로 받는 오버로딩된 메서드)
+     *  굳이 만료시간을 다르게 가져가야할 경우만 사용하도록 오버로딩해둠
+     *  되도록이면  createAccessToken()를 사용해서 토큰생성바람
+     * @param loginUser
+     * @param expirationTimeMs
+     * @return
+     */
+    public String createAccessToken(final Admin loginUser, final long expirationTimeMs) {
         String token = Jwts.builder()
-                .claim(MEMBER_KEY_NAME, loginUser.getKey())
-                .claim(MEMBER_ID_KEY_NAME, loginUser.getMemberId())
-                .claim(MEMBER_TYPE_KEY_NAME, loginUser.getType())
+                .claim(USER_NO_KEY_NAME, loginUser.getId())
+                .claim(USER_ID_KEY_NAME, loginUser.getAdminId())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationTime))
+                .expiration(new Date(System.currentTimeMillis() + expirationTimeMs))
                 .signWith(key)
                 .compact();
         log.debug("created token : {} ", token);
         return token;
     }
 
-    public Member getLoginUserFromAccessToken(final String accessToken) {
+    /**
+     * 액세스 토큰에서 로그인유저정보 꺼내오기
+     * @param accessToken
+     * @return
+     */
+    public Admin getLoginUserFromAccessToken(final String accessToken) {
         Claims claims = getClaims(accessToken);
 
-        return Member.builder()
-                .key(claims.get(MEMBER_KEY_NAME, Long.class))
-                .memberId(claims.get(MEMBER_ID_KEY_NAME, String.class))
-                .type(MemberType.valueOf(claims.get(MEMBER_TYPE_KEY_NAME, String.class)))
+        return Admin.builder()
+                .id(claims.get(USER_NO_KEY_NAME, Long.class))
+                .adminId(claims.get(USER_ID_KEY_NAME, String.class))
                 .build();
-
     }
 
+    /**
+     * 토큰으로부터 클레임 꺼내기 (예외처리를 위해 별도 메서드로 분리시킴)
+     * @param accessToken
+     * @return
+     */
     private Claims getClaims(final String accessToken) {
-        Claims claims;
+        Claims claims ;
         try {
             claims = Jwts.parser()
                     .verifyWith(key) // 단순히 key 타입만 검증하더라...
@@ -75,9 +84,9 @@ public class JwtUtil {
                     .parseSignedClaims(accessToken)
                     .getPayload();
         } catch(ExpiredJwtException eje) { // 만료된 토큰일 경우 발생하는 Exception
-            throw new ExpiredTokenException(); // 내가 만든 Exception으로 바꿔서 던짐 -> 리프레시토큰 로직으로 분기되어야함
+            throw new IllegalArgumentException("No Token"); // 내가 만든 Exception으로 바꿔서 던짐 -> 리프레시토큰 로직으로 분기되어야함
         } catch(Exception e) { // 기타 나머지(변조되었거나, 형식이 안맞거나 등등등)는 퉁쳐서 비정상 토큰으로 간주
-            throw new InvalidTokenException();
+            throw new IllegalArgumentException("Invalid Token");
         }
         return claims;
     }
