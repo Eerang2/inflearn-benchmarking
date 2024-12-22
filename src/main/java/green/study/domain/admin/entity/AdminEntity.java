@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "admin")
+@Table(name = "INF_ADMIN")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
