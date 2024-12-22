@@ -1,5 +1,6 @@
 package green.study.domain.admin.entity;
 
+import green.study.domain.enums.UserType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,5 +26,12 @@ public class AdminEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
 }

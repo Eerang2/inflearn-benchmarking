@@ -5,7 +5,7 @@ let isUsernameAvailable = false;
 // DOM 요소
 const signupContainer = document.getElementById('signup-container');
 const signupForm = document.getElementById('signup-form');
-const usernameInput = document.getElementById('username');
+const usernameInput = document.getElementById('user-id');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 const nameInput = document.getElementById('name');

@@ -1,10 +1,8 @@
 package green.study.presentation.dto;
 
 import green.study.domain.admin.model.Admin;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import green.study.domain.enums.UserType;
+import lombok.*;
 
 public class AdminReq {
 
@@ -12,16 +10,21 @@ public class AdminReq {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Create {
 
         private String adminId;
         private String password;
-        private String passwordConfirm;
+        private String confirmPassword;
+        private String name;
+        private UserType type;
 
         public Admin toAdmin() {
             return Admin.builder()
                     .adminId(adminId)
                     .password(password)
+                    .name(name)
+                    .type(type)
                     .build();
         }
     }
