@@ -10,7 +10,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #e63946;
+    background-color: #4CAF50;
     color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: relative;
@@ -19,6 +19,8 @@ header {
 .logo {
     font-size: 20px;
     font-weight: bold;
+    color: white;
+    text-decoration: none;
 }
 
 .search-container {
@@ -40,60 +42,6 @@ header {
     z-index: 2;
 }
 
-.search-toggle {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #e63946;
-    cursor: pointer;
-}
-
-.search-toggle-circle:hover {
-    background-color: #f8d7da;
-}
-
-/* 검색창 애니메이션 */
-.search-bar {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 40px;
-    max-width: 0;
-    padding: 0 15px;
-    border: none;
-    border-radius: 25px 10px 10px 25px;
-    font-size: 16px;
-    transition: max-width 0.299s ease-in-out, opacity 0.3s ease-in-out;
-    background-color: white;
-    color: #333;
-    opacity: 0;
-    z-index: 1;
-    width: 960px;
-}
-
-.search-bar.open {
-    max-width: 400px;
-    opacity: 1;
-}
-
-.search-toggle-circle.open {
-    transform: translateX(400px); /* 검색창의 너비만큼 이동 */
-}
-
-.search-icon {
-    font-size: 20px;
-    color: #e63946;
-    transition: transform 0.4s ease;
-}
-
-.search-bar.open ~ .search-toggle-circle .search-icon {
-    transform: translateX(-360px); /* 돋보기가 검색창 내부로 이동 */
-}
-
-.search-bar:focus {
-    outline: none;
-}
 
 .logout-button {
     background-color: white;
