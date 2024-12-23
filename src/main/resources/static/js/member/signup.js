@@ -22,19 +22,18 @@ const validatePassword = (password) => {
 
 // 아이디 중복 검사
 document.getElementById('check-username').addEventListener('click', () => {
+    usernameAvailable.textContent = '';
+    usernameError.textContent = '';
 
     $.ajax({
         type: "POST",
-        url: "/api/member/check-id",
-        data: JSON.stringify({
-            "userId": usernameInput.value,
-        }),
+        url: "/api/member/check-id/" + usernameInput.value,
         contentType: "application/json",
         success: function(res) {
             if (res) {
-                usernameAvailable.textContent = '사용 가능한 아이디입니다.';
-            } else {
                 usernameError.textContent = '아이디가 이미 존재합니다.';
+            } else {
+                usernameAvailable.textContent = '사용 가능한 아이디입니다.';
             }
         },
         error: function() {

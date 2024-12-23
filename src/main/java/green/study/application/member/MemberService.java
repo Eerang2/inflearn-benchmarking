@@ -20,4 +20,8 @@ public class MemberService {
         AdminEntity save = memberRepository.save(admin.toEntity());
         return Admin.from(save);
     }
+
+    public boolean checkUserId(String userId) {
+        return memberRepository.existsByAdminId(userId);
+    }
 }

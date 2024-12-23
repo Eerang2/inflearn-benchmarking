@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.jar.JarOutputStream;
 
 @RestController
 @Slf4j
@@ -26,11 +25,8 @@ public class MemberRestController {
         return memberService.signup(adminReq.toAdmin());
     }
 
-
-    @PostMapping("/check-id")
-    public Boolean checkId(@RequestParam("userId") String userId) {
-        System.out.println("===================== > " + userId);
-
-        return true;
+    @PostMapping("/check-id/{userId}")
+    public Boolean checkId(@PathVariable String userId) {
+        return memberService.checkUserId(userId);
     }
 }
