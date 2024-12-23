@@ -22,12 +22,17 @@ public class MemberRestController {
         if (!adminReq.getPassword().equals(adminReq.getConfirmPassword())) {
             throw new IllegalArgumentException("password not matched");
         }
-        return memberService.signup(adminReq.toAdmin());
+        return memberService.signup(adminReq.toMember());
     }
 
     @PostMapping("/check-id/{userId}")
     public Boolean checkId(@PathVariable String userId) {
         return memberService.checkUserId(userId);
+    }
+
+    @PostMapping("/login")
+    public Member login(@RequestBody MemberReq.Create adminReq) {
+
     }
 
 }

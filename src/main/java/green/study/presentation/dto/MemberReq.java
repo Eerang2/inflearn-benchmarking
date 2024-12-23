@@ -9,8 +9,6 @@ public class MemberReq {
 
     @Getter
     @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     @ToString
     public static class Create {
 
@@ -20,13 +18,15 @@ public class MemberReq {
         private String name;
         private MemberType type;
 
-        public Member toAdmin() {
+        public Member toMember() {
             return Member.builder()
-                    .adminId(memberId)
+                    .memberId(memberId)
                     .password(password)
                     .name(name)
                     .type(type)
                     .build();
         }
     }
+
+
 }
