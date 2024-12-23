@@ -1,12 +1,11 @@
 package green.study.infrastructure.util;
 
-import green.study.domain.admin.model.Admin;
+import green.study.domain.admin.model.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -25,11 +24,11 @@ public class JwtUtil {
     private static final String USER_NO_KEY_NAME = "id";
     private final String USER_ID_KEY_NAME = "name";
 
-    public String createAccessToken(final Admin loginUser) {
+    public String createAccessToken(final Member loginUser) {
         return this.createAccessToken(loginUser, EXPIRATION_TIME_MS);
     }
 
-    public String createAccessToken(final Admin loginUser, final long expirationTimeMs) {
+    public String createAccessToken(final Member loginUser, final long expirationTimeMs) {
         String token = Jwts.builder()
                 .claim(USER_NO_KEY_NAME, loginUser.getId())
                 .claim(USER_ID_KEY_NAME, loginUser.getAdminId())
@@ -41,10 +40,10 @@ public class JwtUtil {
         return token;
     }
 
-    public Admin getLoginUserFromAccessToken(final String accessToken) {
+    public Member getLoginUserFromAccessToken(final String accessToken) {
         Claims claims = getClaims(accessToken);
 
-        return Admin.builder()
+        return Member.builder()
                 .id(claims.get(USER_NO_KEY_NAME, Long.class))
                 .adminId(claims.get(USER_ID_KEY_NAME, String.class))
                 .build();

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum UserType {
+public enum MemberType {
 
     USER_TYPE("USER_TYPE"), ADMIN_TYPE("ADMIN_TYPE");
     private final String value;

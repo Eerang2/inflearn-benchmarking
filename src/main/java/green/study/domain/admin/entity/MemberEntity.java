@@ -1,6 +1,6 @@
 package green.study.domain.admin.entity;
 
-import green.study.domain.enums.UserType;
+import green.study.domain.enums.MemberType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminEntity {
+public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class AdminEntity {
 
 
     @Column(nullable = false)
-    private String adminId;
+    private String memberId;
 
     @Column(nullable = false)
     private String password;
@@ -32,6 +32,6 @@ public class AdminEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private MemberType type;
 
 }

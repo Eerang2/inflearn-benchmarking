@@ -1,11 +1,11 @@
 package green.study.presentation.dto;
 
-import green.study.domain.admin.model.Admin;
-import green.study.domain.enums.UserType;
+import green.study.domain.admin.model.Member;
+import green.study.domain.enums.MemberType;
 import lombok.*;
 
 @Getter
-public class AdminReq {
+public class MemberReq {
 
     @Getter
     @Builder
@@ -14,15 +14,15 @@ public class AdminReq {
     @ToString
     public static class Create {
 
-        private String adminId;
+        private String memberId;
         private String password;
         private String confirmPassword;
         private String name;
-        private UserType type;
+        private MemberType type;
 
-        public Admin toAdmin() {
-            return Admin.builder()
-                    .adminId(adminId)
+        public Member toAdmin() {
+            return Member.builder()
+                    .adminId(memberId)
                     .password(password)
                     .name(name)
                     .type(type)
