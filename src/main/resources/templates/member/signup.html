@@ -29,11 +29,13 @@
             <span id="username-available" class="success"></span>
             <button type="button" id="check-username" class="btn">아이디 중복 확인</button>
         </div>
+
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
             <span id="password-error" class="error"></span>
         </div>
+
         <div class="form-group">
             <label for="confirm-password">비밀번호 확인</label>
             <input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호 확인" required>
@@ -56,43 +58,52 @@
             <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required>
             <span id="name-error" class="error"></span>
         </div>
-        <button type="submit" class="btn">회원가입</button>
+
+        <button type="submit" class="btn" name="accommodationForm">회원가입</button>
     </form>
     <div class="form-footer">
         <p>이미 계정이 있나요? <a href="/member/login" id="go-to-login">로그인</a></p>
     </div>
 </div>
 <script>
-    $(document).ready(
-        function() {
-            // 폼 제출 이벤트 처리
-            $('#accommodationForm').on('submit', function(event) {
+    $(document).ready(function() {
+        // 폼 제출 이벤트 처리
+        $('#signup-form').on('submit', function(event) {
+            event.preventDefault(); // 폼 기본 제출 막기
 
-                event.preventDefault(); // 폼 기본 제출 막기
+            // 값들 콘솔에 찍어서 확인
+            console.log("아이디: ", $('#user-id').val());
+            console.log("비밀번호: ", $('#password').val());
+            console.log("비밀번호 확인: ", $('#confirm-password').val());
+            console.log("이름: ", $('#name').val());
+            console.log("유저 타입: ", $('input[name="user-type"]:checked').val());
 
-                const postData = {
-                    userId: $('#user-id').val(),
-                    password: $('#password').val(),
-                    confirmPassword: $('#confirm-password').val(),
-                    name: $('#name').val(),
-                    userType: $('input.user-type:checked').val()
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "api/member/create",
-                    data: JSON.stringify(postData),
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log(res.id)
-                    },
-                    error: function (err) {
+            const postData = {
+                adminId: $('#user-id').val(),
+                password: $('#password').val(),
+                confirmPassword: $('#confirm-password').val(),
+                name: $('#name').val(),
+                type: $('input[name="user-type"]:checked').val() // user-type name으로 변경
+            };
 
-                    }
-                });
+            $.ajax({
+                type: "POST",
+                url: "/api/member/create", // 경로 확인
+                data: JSON.stringify(postData),
+                contentType: "application/json",
+                success: function(res) {
+                    let newId = res.id;
+                    window.location.href = "/member/login/" + newId;
+                },
+                error: function(err) {
+                    console.error("에러 발생:", err);
+                    alert("회원가입에 실패했습니다.");
+                }
             });
         });
-
+    });
 </script>
+
 
 <script src="/js/member/signup.js"></script>
 <script src="/js/common/basic-header.js"></script>
