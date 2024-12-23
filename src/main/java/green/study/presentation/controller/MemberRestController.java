@@ -17,12 +17,12 @@ public class MemberRestController {
     private final MemberService memberService;
 
     @PostMapping("/create")
-    public Member create(@RequestBody MemberReq.Create adminReq) {
-        log.info("request: {}", adminReq.toString());
-        if (!adminReq.getPassword().equals(adminReq.getConfirmPassword())) {
+    public Member create(@RequestBody MemberReq.Create memberReq) {
+        log.info("request: {}", memberReq.toString());
+        if (!memberReq.getPassword().equals(memberReq.getConfirmPassword())) {
             throw new IllegalArgumentException("password not matched");
         }
-        return memberService.signup(adminReq.toMember());
+        return memberService.signup(memberReq.toMember());
     }
 
     @PostMapping("/check-id/{userId}")
@@ -30,9 +30,5 @@ public class MemberRestController {
         return memberService.checkUserId(userId);
     }
 
-    @PostMapping("/login")
-    public Member login(@RequestBody MemberReq.Create adminReq) {
-
-    }
 
 }

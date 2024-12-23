@@ -29,4 +29,20 @@ public class MemberReq {
     }
 
 
+    @Getter
+    @Builder
+    @ToString
+    public static class Login {
+        private String memberId;
+        private String password;
+        private MemberType type;
+
+        public Member toMember() {
+            return Member.builder()
+                    .memberId(memberId)
+                    .password(password)
+                    .type(type)
+                    .build();
+        }
+    }
 }
