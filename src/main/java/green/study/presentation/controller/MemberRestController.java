@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.jar.JarOutputStream;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -18,9 +20,17 @@ public class MemberRestController {
     @PostMapping("/create")
     public Admin create(@RequestBody AdminReq.Create adminReq) {
         log.info("request: {}", adminReq.toString());
-        if (adminReq.getPassword().equals(adminReq.getConfirmPassword())) {
+        if (!adminReq.getPassword().equals(adminReq.getConfirmPassword())) {
             throw new IllegalArgumentException("password not matched");
         }
         return memberService.signup(adminReq.toAdmin());
+    }
+
+
+    @PostMapping("/check-id")
+    public Boolean checkId(@RequestParam("userId") String userId) {
+        System.out.println("===================== > " + userId);
+
+        return true;
     }
 }

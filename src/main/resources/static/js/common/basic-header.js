@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 화면 클릭 시 검색 드롭다운 닫기
-    document.addEventListener("click", function (event) {
-        if (!event.target.closest(".search-container")) {
-            dropdown.style.display = "none";
-        }
-    });
+    // // 화면 클릭 시 검색 드롭다운 닫기
+    // document.addEventListener("click", function (event) {
+    //     if (!event.target.closest(".search-container")) {
+    //         dropdown.style.display = "none";
+    //     }
+    // });
 });

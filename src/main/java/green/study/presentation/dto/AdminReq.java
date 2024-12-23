@@ -4,6 +4,7 @@ import green.study.domain.admin.model.Admin;
 import green.study.domain.enums.UserType;
 import lombok.*;
 
+@Getter
 public class AdminReq {
 
     @Getter
