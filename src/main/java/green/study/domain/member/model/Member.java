@@ -1,6 +1,6 @@
-package green.study.domain.admin.model;
+package green.study.domain.member.model;
 
-import green.study.domain.admin.entity.MemberEntity;
+import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.enums.MemberType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

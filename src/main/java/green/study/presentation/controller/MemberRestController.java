@@ -1,11 +1,9 @@
 package green.study.presentation.controller;
 
 import green.study.application.member.MemberService;
-import green.study.domain.admin.model.Member;
+import green.study.domain.member.model.Member;
 import green.study.presentation.dto.MemberReq;
 import green.study.presentation.dto.MemberRes;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

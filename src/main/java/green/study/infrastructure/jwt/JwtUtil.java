@@ -1,6 +1,6 @@
 package green.study.infrastructure.jwt;
 
-import green.study.domain.admin.model.Member;
+import green.study.domain.member.model.Member;
 import green.study.domain.enums.MemberType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,8 +30,8 @@ public class JwtUtil {
 
     Long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 24L; // 밀리세컨이라 1000 * 60초 * 60분 * 24시 => 하루
     private static final String USER_NO_KEY_NAME = "id";
-    private final String USER_ID_KEY_NAME = "name";
-    private final String USER_TYPE_KEY_NAME = "type";
+    private static final String USER_ID_KEY_NAME = "memberId";
+    private static final String USER_TYPE_KEY_NAME = "type";
 
     public String createAccessToken(final Member loginUser) {
         return this.createAccessToken(loginUser, EXPIRATION_TIME_MS);
@@ -56,12 +56,13 @@ public class JwtUtil {
         return Member.builder()
                 .id(claims.get(USER_NO_KEY_NAME, Long.class))
                 .memberId(claims.get(USER_ID_KEY_NAME, String.class))
-                .type(claims.get(USER_TYPE_KEY_NAME, MemberType.class))
+                .type(MemberType.valueOf(claims.get(USER_TYPE_KEY_NAME, String.class)))
                 .build();
+
     }
 
     private Claims getClaims(final String accessToken) {
-        Claims claims ;
+        Claims claims;
         try {
             claims = Jwts.parser()
                     .verifyWith(key) // 단순히 key 타입만 검증하더라...

@@ -1,7 +1,7 @@
 package green.study.application.member;
 
-import green.study.domain.admin.entity.MemberEntity;
-import green.study.domain.admin.model.Member;
+import green.study.domain.member.entity.MemberEntity;
+import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
 import green.study.infrastructure.jwt.JwtUtil;
 import green.study.presentation.dto.MemberRes;

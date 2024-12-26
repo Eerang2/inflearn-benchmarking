@@ -1,4 +1,4 @@
-package green.study.domain.admin.entity;
+package green.study.domain.member.entity;
 
 import green.study.domain.enums.MemberType;
 import jakarta.persistence.*;

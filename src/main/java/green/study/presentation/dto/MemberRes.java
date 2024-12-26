@@ -1,12 +1,10 @@
 package green.study.presentation.dto;
 
-import green.study.domain.admin.entity.MemberEntity;
+import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.enums.MemberType;
 import lombok.Builder;
 import lombok.Getter;
 import jakarta.servlet.http.Cookie;
-
-import java.lang.reflect.Member;
 
 @Getter
 @Builder
