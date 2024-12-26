@@ -4,6 +4,10 @@ import green.study.application.member.MemberService;
 import green.study.domain.admin.model.Member;
 import green.study.presentation.dto.MemberReq;
 import green.study.presentation.dto.MemberRes;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +22,7 @@ public class MemberRestController {
     private final MemberService memberService;
 
     @PostMapping("/create")
-    public Member create(@RequestBody MemberReq.Create memberReq) {
+    public Member create(@RequestBody @Valid MemberReq.Create memberReq) {
         log.info("request: {}", memberReq.toString());
         if (!memberReq.getPassword().equals(memberReq.getConfirmPassword())) {
             throw new IllegalArgumentException("password not matched");
@@ -32,10 +36,10 @@ public class MemberRestController {
     }
 
     @PostMapping("/login")
-    public MemberRes login(@RequestBody MemberReq.Login memberReq) {
+    public void login(@RequestBody @Valid MemberReq.Login memberReq, HttpServletResponse response) {
         MemberRes memberRes = memberService.loginAndGenerateToken(memberReq.toMember());
         log.info("Token: {}", memberRes.getToken());
-        return memberRes;
+        response.addCookie(memberRes.getCookie());
     }
 
 }

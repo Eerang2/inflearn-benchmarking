@@ -5,6 +5,7 @@ import green.study.domain.admin.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
 import green.study.infrastructure.jwt.JwtUtil;
 import green.study.presentation.dto.MemberRes;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,12 @@ public class MemberService {
         // 토큰 생성
         String accessToken = jwtUtil.createAccessToken(Member.from(memberEntity));
 
-        return MemberRes.from(memberEntity, accessToken);
+        Cookie jwtCookie = new Cookie("JWT_TOKEN",accessToken);
+        jwtCookie.setHttpOnly(true); // 클라이언트 스크립트 접근 방지
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(60 * 60 * 24); // 1일
+
+        return MemberRes.from(memberEntity, accessToken, jwtCookie);
 
     }
 }
