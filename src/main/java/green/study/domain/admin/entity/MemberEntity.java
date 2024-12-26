@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "INF_ADMIN")
+@Table(name = "MEMBER")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "admin_no")
+    @Column(name = "member_no")
     private Long id;
 
 

@@ -1,11 +1,14 @@
-package green.study.infrastructure.util;
+package green.study.infrastructure.jwt;
 
 import green.study.domain.admin.model.Member;
+import green.study.domain.enums.MemberType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -14,15 +17,21 @@ import java.util.Date;
 
 @Component
 @Slf4j
+@Getter
 public class JwtUtil {
 
-    private static final String secretKey = "b2d6f5c79a2b2f1db939f04e3dbd6d9bdb56c07b557073d2a0c24fd4faec0a4f";
+    private final String secretKey;
+    private final SecretKey key;
 
-    private final SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    public JwtUtil(@Value("${jwt.secret-key}") String secretKey) {
+        this.secretKey = secretKey;
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
 
     Long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 24L; // 밀리세컨이라 1000 * 60초 * 60분 * 24시 => 하루
     private static final String USER_NO_KEY_NAME = "id";
     private final String USER_ID_KEY_NAME = "name";
+    private final String USER_TYPE_KEY_NAME = "type";
 
     public String createAccessToken(final Member loginUser) {
         return this.createAccessToken(loginUser, EXPIRATION_TIME_MS);
@@ -31,7 +40,8 @@ public class JwtUtil {
     public String createAccessToken(final Member loginUser, final long expirationTimeMs) {
         String token = Jwts.builder()
                 .claim(USER_NO_KEY_NAME, loginUser.getId())
-                .claim(USER_ID_KEY_NAME, loginUser.getAdminId())
+                .claim(USER_ID_KEY_NAME, loginUser.getMemberId())
+                .claim(USER_TYPE_KEY_NAME, loginUser.getType())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationTimeMs))
                 .signWith(key)
@@ -45,7 +55,8 @@ public class JwtUtil {
 
         return Member.builder()
                 .id(claims.get(USER_NO_KEY_NAME, Long.class))
-                .adminId(claims.get(USER_ID_KEY_NAME, String.class))
+                .memberId(claims.get(USER_ID_KEY_NAME, String.class))
+                .type(claims.get(USER_TYPE_KEY_NAME, MemberType.class))
                 .build();
     }
 

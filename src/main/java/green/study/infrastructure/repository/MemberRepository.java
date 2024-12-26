@@ -4,8 +4,12 @@ import green.study.domain.admin.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
-    boolean existsByAdminId(String userId);
+    boolean existsByMemberId(String userId);
+
+    Optional<MemberEntity> findByMemberId(String userId);
 }

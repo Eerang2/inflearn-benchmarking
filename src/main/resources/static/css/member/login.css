@@ -16,7 +16,7 @@ label {
     display: block;
     margin: 10px 0 5px;
 }
-input {
+.form-group input {
     width: 95%;
     padding: 10px;
     margin-bottom: 10px;
@@ -56,4 +56,31 @@ input {
 }
 .form-footer a:hover {
     text-decoration: underline;
+}
+
+
+/* 라디오 버튼 전용 스타일 */
+.user-type label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 라디오 버튼과 텍스트 사이의 간격 */
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 10px !important;
+}
+
+
+
+/* 반응형 레이아웃: 작은 화면에서 라디오 버튼을 세로로 배치 */
+@media (max-width: 480px) {
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

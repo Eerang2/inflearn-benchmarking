@@ -69,7 +69,7 @@ $(document).ready(function() {
 
         // 값들 콘솔에 찍어서 확인
         const postData = {
-            adminId: $('#user-id').val(),
+            memberId: $('#user-id').val(),
             password: $('#password').val(),
             confirmPassword: $('#confirm-password').val(),
             name: $('#name').val(),

@@ -3,6 +3,7 @@ package green.study.presentation.controller;
 import green.study.application.member.MemberService;
 import green.study.domain.admin.model.Member;
 import green.study.presentation.dto.MemberReq;
+import green.study.presentation.dto.MemberRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,11 @@ public class MemberRestController {
         return memberService.checkUserId(userId);
     }
 
+    @PostMapping("/login")
+    public MemberRes login(@RequestBody MemberReq.Login memberReq) {
+        MemberRes memberRes = memberService.loginAndGenerateToken(memberReq.toMember());
+        log.info("Token: {}", memberRes.getToken());
+        return memberRes;
+    }
 
 }
