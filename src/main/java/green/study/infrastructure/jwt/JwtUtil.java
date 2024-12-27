@@ -1,5 +1,6 @@
 package green.study.infrastructure.jwt;
 
+import green.study.domain.exceptions.InvalidTokenException;
 import green.study.domain.member.model.Member;
 import green.study.domain.enums.MemberType;
 import io.jsonwebtoken.Claims;
@@ -71,7 +72,7 @@ public class JwtUtil {
                     .getPayload();
         } catch(ExpiredJwtException eje) { // 만료된 토큰일 경우 발생하는 Exception
             throw new IllegalArgumentException("No Token"); // 내가 만든 Exception으로 바꿔서 던짐 -> 리프레시토큰 로직으로 분기되어야함
-        } catch(Exception e) { // 기타 나머지(변조되었거나, 형식이 안맞거나 등등등)는 퉁쳐서 비정상 토큰으로 간주
+        } catch(InvalidTokenException e) { // 기타 나머지(변조되었거나, 형식이 안맞거나 등등등)는 퉁쳐서 비정상 토큰으로 간주
             throw new IllegalArgumentException("Invalid Token");
         }
         return claims;

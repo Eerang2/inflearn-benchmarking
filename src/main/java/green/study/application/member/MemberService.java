@@ -20,13 +20,13 @@ public class MemberService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public Member signup(Member admin) {
-        MemberEntity save = memberRepository.save(admin.toEntity());
+    public Member signup(Member member) {
+        MemberEntity save = memberRepository.save(member.toEntity());
         return Member.from(save);
     }
 
-    public boolean checkUserId(String userId) {
-        return memberRepository.existsByMemberId(userId);
+    public boolean checkUserId(String memberId) {
+        return memberRepository.existsByMemberId(memberId);
     }
 
     @Transactional
