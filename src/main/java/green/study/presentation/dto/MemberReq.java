@@ -37,6 +37,10 @@ public class MemberReq {
                     .type(type)
                     .build();
         }
+
+        public static boolean isEqualsPasswordAndConfirmPassword(String password, String confirmPassword) {
+            return password == confirmPassword;
+        }
     }
 
 

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <link rel="stylesheet" href="/css/member/mypage.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>Web Study</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">홈</a></li>
+            <li><a href="#">카테고리</a></li>
+            <li><a href="#">추천 강의</a></li>
+            <li><a href="#">로그인</a></li>
+        </ul>
+    </nav>
+    <div class="profile-menu">
+        <span class="username">사용자 이름</span>
+    </div>
+</header>
+<main>
+    <aside class="sidebar">
+        <ul>
+            <li data-section="dashboard">Dashboard</li>
+            <li data-section="courses">My Courses</li>
+            <li data-section="profile">Profile</li>
+            <li data-section="settings">Settings</li>
+        </ul>
+    </aside>
+
+    <section class="content">
+        <div id="dashboard" class="section" style="display: none;">
+            <h2>Dashboard</h2>
+            <div class="content-body"></div>
+        </div>
+        <div id="courses" class="section" style="display: none;">
+            <h2>My Courses</h2>
+            <div class="content-body"></div>
+        </div>
+        <div id="profile" class="section" style="display: none;">
+            <h2>Profile</h2>
+            <div class="content-body"></div>
+        </div>
+        <div id="settings" class="section" style="display: none;">
+            <h2>Settings</h2>
+            <div class="content-body"></div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Inflearn. All rights reserved.</p>
+</footer>
+<script src="/js/member/mypage.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebarLinks = document.querySelectorAll(".sidebar ul li");
+        const sections = document.querySelectorAll(".content .section");
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                const sectionId = link.getAttribute("data-section");
+
+                // 모든 섹션 숨기기
+                sections.forEach(section => {
+                    section.style.display = "none";
+                });
+
+                // 선택한 섹션 표시
+                const activeSection = document.getElementById(sectionId);
+                activeSection.style.display = "block";
+
+                // AJAX 호출
+                $.ajax({
+                    url: `/api/member/mypage/${sectionId}`,
+                    type: "POST",
+                    success: function (data) {
+                        // 받은 데이터로 섹션 내용 업데이트
+                        activeSection.querySelector(".content-body").innerHTML = data.html;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            });
+        });
+
+        // 기본적으로 첫 번째 섹션 표시
+        const defaultSection = document.querySelector(".content .section");
+        defaultSection.style.display = "block";
+    });
+</script>
+</body>
+</html>

@@ -19,6 +19,8 @@ public class Member {
     private String name;
     private MemberType type;
 
+
+
     public static Member from(MemberEntity entity) {
         return Member.builder()
                 .id(entity.getId())
