@@ -1,4 +1,4 @@
-package green.study.infrastructure.jwt;
+package green.study.infrastructure.util;
 
 import green.study.domain.exceptions.InvalidTokenException;
 import green.study.domain.member.model.Member;
@@ -34,17 +34,22 @@ public class JwtUtil {
     private static final String USER_ID_KEY_NAME = "memberId";
     private static final String USER_TYPE_KEY_NAME = "type";
 
+    /**
+     * 만료시간에 대한 서비스 확장성을 위한 오버로딩 메서드 생성
+     * @param loginUser
+     * @return
+     */
     public String createAccessToken(final Member loginUser) {
         return this.createAccessToken(loginUser, EXPIRATION_TIME_MS);
     }
 
-    public String createAccessToken(final Member loginUser, final long expirationTimeMs) {
+    public String createAccessToken(final Member loginUser, final Long expirationTime) {
         String token = Jwts.builder()
                 .claim(USER_NO_KEY_NAME, loginUser.getId())
                 .claim(USER_ID_KEY_NAME, loginUser.getMemberId())
                 .claim(USER_TYPE_KEY_NAME, loginUser.getType())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationTimeMs))
+                .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key)
                 .compact();
         log.debug("created token : {} ", token);

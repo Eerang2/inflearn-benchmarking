@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,13 @@
             <a href="#">멘토링</a>
             <a href="#">커뮤니티</a>
         </nav>
-        <a class="login" href="member/login">로그인</a>
+
+        <button th:if="${member.type == null}" class="login" action="/login">로그인</button>
+        <form th:if="${member.type != null}" th:action="@{/mypage/{userId}(userId=${member.id})}" method="GET">
+            <button type="submit" class="login">[[${member.memberId}]] 님</button>
+        </form>
+
+
 </header>
 
 <div class="search-bar">

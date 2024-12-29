@@ -3,7 +3,7 @@ package green.study.application.member;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
-import green.study.infrastructure.jwt.JwtUtil;
+import green.study.infrastructure.util.JwtUtil;
 import green.study.presentation.dto.MemberRes;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +44,12 @@ public class MemberService {
         // 토큰 생성
         String accessToken = jwtUtil.createAccessToken(Member.from(memberEntity));
 
-        Cookie jwtCookie = new Cookie("JWT_TOKEN",accessToken);
-        jwtCookie.setHttpOnly(true); // 클라이언트 스크립트 접근 방지
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(60 * 60 * 24); // 1일
+        return MemberRes.from(memberEntity, accessToken);
+    }
 
-        return MemberRes.from(memberEntity, accessToken, jwtCookie);
-
+    @Transactional
+    public Member findById(Long id) {
+        MemberEntity memberById = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return Member.from(memberById);
     }
 }

@@ -82,7 +82,7 @@ $(document).ready(function() {
             data: JSON.stringify(postData),
             contentType: "application/json",
             success: function(res) {
-                window.location.href = "/member/login";
+                window.location.href = "/login";
             },
             error: function(err) {
                 console.error("에러 발생:", err);

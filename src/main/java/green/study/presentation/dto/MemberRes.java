@@ -13,14 +13,12 @@ public class MemberRes {
     private Long id;
     private String token;
     private MemberType type;
-    private Cookie cookie;
 
-    public static MemberRes from(MemberEntity member, String generateToken, Cookie cookie) {
+    public static MemberRes from(MemberEntity member, String generateToken) {
         return MemberRes.builder()
                 .id(member.getId())
                 .token(generateToken)
                 .type(member.getType())
-                .cookie(cookie)
                 .build();
     }
 
