@@ -27,7 +27,7 @@ document.getElementById('check-username').addEventListener('click', () => {
 
     $.ajax({
         type: "POST",
-        url: "/api/member/check-id/" + usernameInput.value,
+        url: "/api/check-id/" + usernameInput.value,
         contentType: "application/json",
         success: function(res) {
             if (res) {
@@ -78,7 +78,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/api/member/create",
+            url: "/api/create",
             data: JSON.stringify(postData),
             contentType: "application/json",
             success: function(res) {

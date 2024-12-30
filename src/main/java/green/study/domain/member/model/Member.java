@@ -1,5 +1,7 @@
 package green.study.domain.member.model;
 
+import green.study.domain.exceptions.registers.MemberIdValidateException;
+import green.study.domain.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.enums.MemberType;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,17 @@ public class Member {
     private String name;
     private MemberType type;
 
-
+    public void validate() {
+        if (password.length() < 8 ) {
+            throw new PasswordValidateException("비밀번호는 8자 이상입니다.");
+        } else if (!password.matches(".*\\d.*") || !password.matches(".*[A-Za-z].*")) {
+            throw new PasswordValidateException("비밀번호는 숫자와 영문자를 포함해야합니다.");
+        } else if (memberId.length() < 4 || memberId.length() > 12) {
+            throw new MemberIdValidateException("아이디는 4자 이상 12자 이하입니다.");
+        } else if (!memberId.matches("^[a-zA-Z0-9]*$")) {
+            throw new MemberIdValidateException("아이디는 숫자와 영문자만 사용할수있습니다.");
+        }
+    }
 
     public static Member from(MemberEntity entity) {
         return Member.builder()

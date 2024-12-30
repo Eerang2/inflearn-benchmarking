@@ -13,7 +13,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/api/member/login",
+            url: "/api/login",
             data: JSON.stringify(postData),
             contentType: "application/json",
             success: function() {

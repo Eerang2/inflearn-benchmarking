@@ -17,16 +17,15 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/member")
+@RequestMapping("/api")
 public class MemberRestController {
 
     private final MemberService memberService;
 
     @PostMapping("/create")
-    public Member create(@RequestBody @Valid MemberReq.Create memberReq) {
+    public void create(@RequestBody @Valid MemberReq.Create memberReq) {
         log.info("request: {}", memberReq.toString());
-
-        return memberService.signup(memberReq.toMember());
+        memberService.signup(memberReq.toMember());
     }
 
     @PostMapping("/check-id/{userId}")
