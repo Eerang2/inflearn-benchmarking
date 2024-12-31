@@ -1,17 +1,20 @@
 package green.study.application.member.repository;
 
 import green.study.application.member.MemberService;
-import green.study.domain.member.enums.MemberType;
+import green.study.domain.enums.MemberType;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
 import jakarta.validation.ConstraintViolationException;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;

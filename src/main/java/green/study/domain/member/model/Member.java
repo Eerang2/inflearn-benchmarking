@@ -1,9 +1,9 @@
 package green.study.domain.member.model;
 
-import green.study.domain.member.exceptions.registers.MemberIdValidateException;
-import green.study.domain.member.exceptions.registers.PasswordValidateException;
+import green.study.domain.exceptions.registers.MemberIdValidateException;
+import green.study.domain.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
-import green.study.domain.member.enums.MemberType;
+import green.study.domain.enums.MemberType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Member {
 
-    private Long key;
+    private Long id;
     private String memberId;
     private String password;
     private String name;
@@ -31,11 +31,12 @@ public class Member {
         } else if (memberId.length() < 4 || memberId.length() > 12) {
             throw new MemberIdValidateException("아이디는 4자 이상 12자 이하입니다.");
         }
+
     }
 
     public static Member from(MemberEntity entity) {
         return Member.builder()
-                .key(entity.getKey())
+                .id(entity.getId())
                 .memberId(entity.getMemberId())
                 .password(entity.getPassword())
                 .name(entity.getName())
@@ -45,7 +46,7 @@ public class Member {
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
-                .key(key)
+                .id(id)
                 .memberId(memberId)
                 .password(password)
                 .name(name)
@@ -54,9 +55,9 @@ public class Member {
 
     }
 
-    public Member(Long key, String memberId, MemberType type) {
+    public Member(Long id, String memberId, MemberType type) {
         this.memberId = memberId;
-        this.key = key;
+        this.id = id;
         this.type = type;
     }
 }
