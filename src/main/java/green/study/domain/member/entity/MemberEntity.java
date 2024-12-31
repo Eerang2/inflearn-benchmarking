@@ -2,6 +2,8 @@ package green.study.domain.member.entity;
 
 import green.study.domain.enums.MemberType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,10 +23,12 @@ public class MemberEntity {
     private Long id;
 
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
+    @Size(min = 4, max = 12, message = "아이디는 4자 이상 12자 이하여야 합니다.")
     private String memberId;
 
     @Column(nullable = false)
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*]{8,}$", message = "비밀번호는 최소 8자, 숫자와 문자를 포함해야 합니다.")
     private String password;
 
     @Column(nullable = false)
