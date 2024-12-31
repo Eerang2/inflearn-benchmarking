@@ -7,6 +7,7 @@ import green.study.domain.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
+import green.study.presentation.dto.MemberRes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,8 +42,7 @@ class MemberServiceTest {
 
         memberService.signup(member);
 
-        MemberEntity savedMember = memberRepository.findMemberIdByMemberId(member.getMemberId())
-                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        MemberEntity savedMember = memberRepository.findByMemberId(member.getMemberId()).orElseThrow(() -> new MemberIdValidateException(member.getMemberId()));
         assertThat(savedMember.getMemberId()).isEqualTo(member.getMemberId());
     }
 
@@ -203,4 +203,48 @@ class MemberServiceTest {
         assertTrue(LongIdException2.getMessage().contains("비밀번호는 숫자와 영문자, 특수문자를 포함해야합니다."));
     }
 
+    @Test
+    @Transactional
+    @DisplayName("로그인 성공")
+    void login_success() {
+        Member createMember = Member.builder()
+                .memberId("jinwoo123")
+                .password("qwer1234!")
+                .name("홍길동")
+                .type(MemberType.USER_TYPE)
+                .build();
+        memberService.signup(createMember);
+
+        Member loginMember = Member.builder()
+                .memberId("jinwoo123")
+                .password("qwer1234!")
+                .build();
+        MemberRes memberRes = memberService.loginAndGenerateToken(loginMember);
+        assertNotNull(memberRes);
+        assertNotNull(memberRes.getToken());
+        assertThat(memberRes.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("로그인 실패")
+    void login_failed() {
+        Member createMember = Member.builder()
+                .memberId("jinwoo123")
+                .password("qwer1234!")
+                .name("홍길동")
+                .type(MemberType.USER_TYPE)
+                .build();
+        memberService.signup(createMember);
+
+        Member loginMember = Member.builder()
+                .memberId("jinwoo12")
+                .password("qwer1234!")
+                .build();
+
+        MemberIdValidateException wrongMemberId = assertThrows(MemberIdValidateException.class, () -> {
+            memberService.loginAndGenerateToken(loginMember);
+        });
+        assertTrue(wrongMemberId.getMessage().contains("사용자를 찾을 수 없습니다."));
+    }
 }

@@ -29,7 +29,7 @@ public class MemberService {
         member.validate();
 
         // 백엔드에서 ID 한번 더 조회
-        if(memberRepository.findMemberIdByMemberId(member.getMemberId()).isPresent()) {
+        if(memberRepository.existsByMemberId(member.getMemberId())) {
             throw new MemberIdValidateException("이미 존재하는 회원입니다.");
         }
         memberRepository.save(member.toEntity());
@@ -43,7 +43,7 @@ public class MemberService {
     public MemberRes loginAndGenerateToken(Member member) {
 
         // 사용자 조회
-        MemberEntity memberEntity = memberRepository.findMemberIdByMemberId(member.getMemberId())
+        MemberEntity memberEntity = memberRepository.findByMemberId(member.getMemberId())
                 .orElseThrow(() -> new MemberIdValidateException("사용자를 찾을 수 없습니다."));
 
         // 비번 확인

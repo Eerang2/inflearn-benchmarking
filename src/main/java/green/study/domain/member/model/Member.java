@@ -54,4 +54,10 @@ public class Member {
                 .build();
 
     }
+
+    public Member(Long id, String memberId, MemberType type) {
+        this.memberId = memberId;
+        this.id = id;
+        this.type = type;
+    }
 }
