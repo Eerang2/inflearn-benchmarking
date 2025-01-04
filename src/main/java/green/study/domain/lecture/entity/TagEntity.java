@@ -3,13 +3,12 @@ package green.study.domain.lecture.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "lecture_tag")
+@Table(name = "TAGS")
 public class TagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_key")
-    private Long key;
+    private Long id;
 
     @Column(nullable = false)
     private String tagName;
