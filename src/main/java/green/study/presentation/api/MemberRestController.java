@@ -29,7 +29,7 @@ public class MemberRestController {
     }
 
     @PostMapping("/check-id/{userId}")
-    public Boolean checkId(@PathVariable String userId) {
+    public Boolean checkId(@PathVariable("userId") String userId) {
         return memberService.checkUserId(userId);
     }
 

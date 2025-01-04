@@ -31,7 +31,6 @@ public class Member {
         } else if (memberId.length() < 4 || memberId.length() > 12) {
             throw new MemberIdValidateException("아이디는 4자 이상 12자 이하입니다.");
         }
-
     }
 
     public static Member from(MemberEntity entity) {
