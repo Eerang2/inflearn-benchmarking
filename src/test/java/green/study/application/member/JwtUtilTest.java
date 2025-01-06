@@ -1,8 +1,8 @@
 package green.study.application.member;
 
-import green.study.domain.enums.MemberType;
-import green.study.domain.exceptions.ExpiredTokenException;
-import green.study.domain.exceptions.InvalidTokenException;
+import green.study.domain.member.enums.MemberType;
+import green.study.domain.member.exceptions.ExpiredTokenException;
+import green.study.domain.member.exceptions.InvalidTokenException;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.util.JwtUtil;
 import org.junit.jupiter.api.Assertions;

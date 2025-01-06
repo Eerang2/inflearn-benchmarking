@@ -1,7 +1,7 @@
 package green.study.application.member;
 
-import green.study.domain.exceptions.registers.MemberIdValidateException;
-import green.study.domain.exceptions.registers.PasswordValidateException;
+import green.study.domain.member.exceptions.registers.MemberIdValidateException;
+import green.study.domain.member.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Slf4j

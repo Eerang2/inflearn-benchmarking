@@ -1,4 +1,4 @@
-package green.study.domain.enums;
+package green.study.domain.member.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

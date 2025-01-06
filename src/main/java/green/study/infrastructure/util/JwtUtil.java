@@ -1,9 +1,9 @@
 package green.study.infrastructure.util;
 
-import green.study.domain.exceptions.ExpiredTokenException;
-import green.study.domain.exceptions.InvalidTokenException;
+import green.study.domain.member.exceptions.ExpiredTokenException;
+import green.study.domain.member.exceptions.InvalidTokenException;
 import green.study.domain.member.model.Member;
-import green.study.domain.enums.MemberType;
+import green.study.domain.member.enums.MemberType;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
@@ -29,9 +29,9 @@ public class JwtUtil {
     }
 
     Long EXPIRATION_TIME_MS = 1000 * 60 * 60 * 24L; // 밀리세컨이라 1000 * 60초 * 60분 * 24시 => 하루
-    private static final String USER_NO_KEY_NAME = "id";
-    private static final String USER_ID_KEY_NAME = "memberId";
-    private static final String USER_TYPE_KEY_NAME = "type";
+    private static final String MEMBER_KEY_NAME = "key";
+    private static final String MEMBER_ID_KEY_NAME = "memberId";
+    private static final String MEMBER_TYPE_KEY_NAME = "type";
 
     /**
      * 만료시간에 대한 서비스 확장성을 위한 오버로딩 메서드 생성
@@ -44,9 +44,9 @@ public class JwtUtil {
 
     public String createAccessToken(final Member loginUser, final Long expirationTime) {
         String token = Jwts.builder()
-                .claim(USER_NO_KEY_NAME, loginUser.getId())
-                .claim(USER_ID_KEY_NAME, loginUser.getMemberId())
-                .claim(USER_TYPE_KEY_NAME, loginUser.getType())
+                .claim(MEMBER_KEY_NAME, loginUser.getKey())
+                .claim(MEMBER_ID_KEY_NAME, loginUser.getMemberId())
+                .claim(MEMBER_TYPE_KEY_NAME, loginUser.getType())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key)
@@ -59,9 +59,9 @@ public class JwtUtil {
         Claims claims = getClaims(accessToken);
 
         return Member.builder()
-                .id(claims.get(USER_NO_KEY_NAME, Long.class))
-                .memberId(claims.get(USER_ID_KEY_NAME, String.class))
-                .type(MemberType.valueOf(claims.get(USER_TYPE_KEY_NAME, String.class)))
+                .key(claims.get(MEMBER_KEY_NAME, Long.class))
+                .memberId(claims.get(MEMBER_ID_KEY_NAME, String.class))
+                .type(MemberType.valueOf(claims.get(MEMBER_TYPE_KEY_NAME, String.class)))
                 .build();
 
     }

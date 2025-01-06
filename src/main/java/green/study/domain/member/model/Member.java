@@ -1,9 +1,9 @@
 package green.study.domain.member.model;
 
-import green.study.domain.exceptions.registers.MemberIdValidateException;
-import green.study.domain.exceptions.registers.PasswordValidateException;
+import green.study.domain.member.exceptions.registers.MemberIdValidateException;
+import green.study.domain.member.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
-import green.study.domain.enums.MemberType;
+import green.study.domain.member.enums.MemberType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Member {
 
-    private Long id;
+    private Long key;
     private String memberId;
     private String password;
     private String name;
@@ -35,7 +35,7 @@ public class Member {
 
     public static Member from(MemberEntity entity) {
         return Member.builder()
-                .id(entity.getId())
+                .key(entity.getKey())
                 .memberId(entity.getMemberId())
                 .password(entity.getPassword())
                 .name(entity.getName())
@@ -45,7 +45,7 @@ public class Member {
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
-                .id(id)
+                .key(key)
                 .memberId(memberId)
                 .password(password)
                 .name(name)
@@ -54,9 +54,9 @@ public class Member {
 
     }
 
-    public Member(Long id, String memberId, MemberType type) {
+    public Member(Long key, String memberId, MemberType type) {
         this.memberId = memberId;
-        this.id = id;
+        this.key = key;
         this.type = type;
     }
 }

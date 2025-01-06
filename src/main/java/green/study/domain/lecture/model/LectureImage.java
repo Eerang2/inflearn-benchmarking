@@ -7,7 +7,9 @@ import lombok.Getter;
 @Builder
 public class LectureImage {
 
-    private String url;
+    private Long lectureImageKey;
+    private String lectureImageName;
     private String path;
-    private Long lectureId;
+    private String uniquePath;
+    private Long lectureKey;
 }

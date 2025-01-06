@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 public class LectureVideoEntity {
 
     @Id
-    private Long id;
+    private Long key;
     private String sectionTitle;
     private Long lectureId;
 }

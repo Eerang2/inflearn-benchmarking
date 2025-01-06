@@ -1,7 +1,7 @@
 package green.study.presentation.dto;
 
 import green.study.domain.member.model.Member;
-import green.study.domain.enums.MemberType;
+import green.study.domain.member.enums.MemberType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

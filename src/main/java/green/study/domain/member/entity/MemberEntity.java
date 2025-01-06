@@ -1,6 +1,6 @@
 package green.study.domain.member.entity;
 
-import green.study.domain.enums.MemberType;
+import green.study.domain.member.enums.MemberType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -19,11 +19,11 @@ public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_no")
-    private Long id;
+    @Column(name = "member_key")
+    private Long key;
 
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "member_id")
     @Size(min = 4, max = 12, message = "아이디는 4자 이상 12자 이하여야 합니다.")
     private String memberId;
 

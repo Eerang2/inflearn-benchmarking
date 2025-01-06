@@ -1,9 +1,9 @@
 package green.study.application.member.service;
 
 import green.study.application.member.MemberService;
-import green.study.domain.enums.MemberType;
-import green.study.domain.exceptions.registers.MemberIdValidateException;
-import green.study.domain.exceptions.registers.PasswordValidateException;
+import green.study.domain.member.enums.MemberType;
+import green.study.domain.member.exceptions.registers.MemberIdValidateException;
+import green.study.domain.member.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;

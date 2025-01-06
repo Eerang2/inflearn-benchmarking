@@ -1,4 +1,4 @@
-package green.study.domain.exceptions;
+package green.study.domain.member.exceptions;
 
 public class ExpiredTokenException extends RuntimeException {
     public ExpiredTokenException() {

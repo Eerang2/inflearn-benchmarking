@@ -8,6 +8,6 @@ public class VideoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "video_id")
-    private Long id;
+    @Column(name = "video_key")
+    private Long key;
 }
