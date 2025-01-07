@@ -222,7 +222,7 @@ class MemberServiceTest {
         MemberRes memberRes = memberService.loginAndGenerateToken(loginMember);
         assertNotNull(memberRes);
         assertNotNull(memberRes.getToken());
-        assertThat(memberRes.getId()).isEqualTo(1L);
+        assertThat(memberRes.getKey()).isEqualTo(1L);
     }
 
     @Test

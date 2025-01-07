@@ -34,7 +34,7 @@ public class JwtUtilTest {
     void 토큰에서_회원번호_꺼내보기() {
         String accessToken = jwtUtil.createAccessToken(new Member(7L, "jinwoo12", MemberType.USER_TYPE));
         Member member = jwtUtil.getLoginUserFromAccessToken(accessToken);
-        Assertions.assertEquals(7L,member.getId());
+        Assertions.assertEquals(7L,member.getKey());
     }
 
     @Test
