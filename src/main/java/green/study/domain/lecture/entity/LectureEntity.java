@@ -26,7 +26,4 @@ public class LectureEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "member_no", referencedColumnName = "id", insertable = false, updatable = false)
-    private MemberEntity memberNo;
 }

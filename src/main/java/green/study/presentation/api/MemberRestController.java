@@ -5,10 +5,12 @@ import green.study.domain.member.model.Member;
 import green.study.infrastructure.util.CookieUtil;
 import green.study.presentation.dto.MemberReq;
 import green.study.presentation.dto.MemberRes;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -40,6 +42,13 @@ public class MemberRestController {
         response.addCookie(CookieUtil.createJwtCookie(memberRes.getToken()));
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(@CookieValue(value = "JWT_TOKEN", required = false) final String token,
+                                 HttpServletResponse response) {
+        response.addCookie(CookieUtil.deleteJwtCookie(token));
+        return ResponseEntity.ok("logout");
+
+    }
     @PostMapping("/mypage/{section}")
     public  Map<String, String> loadPage(@PathVariable String section) {
         String resHtml;

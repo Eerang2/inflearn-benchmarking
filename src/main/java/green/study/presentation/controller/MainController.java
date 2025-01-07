@@ -1,6 +1,7 @@
 package green.study.presentation.controller;
 
 import green.study.application.member.MemberService;
+import green.study.domain.GetToken;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,13 @@ public class MainController {
     private final MemberService memberService;
 
     @GetMapping("/")
-    public String index(@CookieValue(value = "JWT_TOKEN", required = false) final String token,
+    public String index(@GetToken final Object token,
                         Model model) {
 
-        Member member = jwtUtil.getLoginUserFromAccessToken(token);
-        log.debug(member.getMemberId());
-        model.addAttribute("member", member);
+        System.out.println(token);
+//        Member member = jwtUtil.getLoginUserFromAccessToken(token);
+//        log.debug(member.getMemberId());
+//        model.addAttribute("member", member);
         return "index";
     }
 
@@ -39,11 +41,11 @@ public class MainController {
         return "member/login";
     }
 
-    @GetMapping("/mypage/{id}")
-    public String myPageForm(@PathVariable Long id, Model model) {
+    @GetMapping("/mypage/{key}")
+    public String myPageForm(@PathVariable("key") Long key, Model model) {
 
         // security 로 url 접속 차단
-        Member member = memberService.findById(id);
+        Member member = memberService.findByKey(key);
         model.addAttribute("member", member);
         return "member/mypage";
     }

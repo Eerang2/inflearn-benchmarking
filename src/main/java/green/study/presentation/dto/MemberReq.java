@@ -12,6 +12,8 @@ public class MemberReq {
     @Getter
     @Builder
     @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Create {
 
         @NotBlank(message = "아이디는 필수입니다.")
@@ -47,6 +49,8 @@ public class MemberReq {
     @Getter
     @Builder
     @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Login {
         @NotBlank(message = "아이디는 필수입니다.")
         private String memberId;

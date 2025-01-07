@@ -18,7 +18,7 @@
         </nav>
 
         <button th:if="${member.type == null}" class="login" action="/login">로그인</button>
-        <form th:if="${member.type != null}" th:action="@{/mypage/{userId}(userId=${member.id})}" method="GET">
+        <form th:if="${member.type != null}" th:action="@{/mypage/{userId}(userId=${member.key})}" method="GET">
             <button type="submit" class="login">[[${member.memberId}]] 님</button>
         </form>
 

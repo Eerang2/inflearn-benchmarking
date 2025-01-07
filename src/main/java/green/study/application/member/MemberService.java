@@ -56,8 +56,9 @@ public class MemberService {
     }
 
     @Transactional
-    public Member findById(Long id) {
-        MemberEntity memberById = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public Member findByKey(Long key) {
+
+        MemberEntity memberById = memberRepository.findByKey(key).orElseThrow(IllegalArgumentException::new);
         return Member.from(memberById);
     }
 }

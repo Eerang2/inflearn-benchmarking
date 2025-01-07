@@ -46,6 +46,20 @@
         <div id="profile" class="section" style="display: none;">
             <h2>Profile</h2>
             <div class="content-body"></div>
+                <button onclick="logout()">logout</button>
+            <script>
+                function logout() {
+                    fetch('/api/logout', { method: 'GET' })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = '/'; // 성공하면 /로 리다이렉트
+                            } else {
+                                alert("Logout failed");
+                            }
+                        });
+                }
+            </script>
+
         </div>
         <div id="settings" class="section" style="display: none;">
             <h2>Settings</h2>
