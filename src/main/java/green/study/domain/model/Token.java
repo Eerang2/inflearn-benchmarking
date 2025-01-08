@@ -1,4 +1,4 @@
-package green.study.domain;
+package green.study.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

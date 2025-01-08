@@ -1,5 +1,7 @@
-package green.study.domain;
+package green.study.presentation.interceptor;
 
+import green.study.domain.model.GetToken;
+import green.study.domain.model.Token;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

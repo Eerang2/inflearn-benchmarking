@@ -1,4 +1,4 @@
-package green.study.domain;
+package green.study.domain.model;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
