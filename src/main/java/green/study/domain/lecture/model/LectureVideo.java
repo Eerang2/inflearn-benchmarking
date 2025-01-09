@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class LectureTags {
-    private Long lectureTagKey;
-    private String tagName;
-    private Long parentKey;
+public class LectureVideo {
+    private Long key;
+    private String chapter;
     private Long lectureKey;
+    private Long videoKey;
 }

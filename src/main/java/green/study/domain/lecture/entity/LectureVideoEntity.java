@@ -10,6 +10,12 @@ public class LectureVideoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lecture_video_key")
     private Long key;
-    private String sectionTitle;
-    private Long lectureId;
+
+    private String chapter;
+
+    @Column(name = "lecture_key", nullable = false)
+    private Long lectureKey;
+
+    @Column(name = "video_key", nullable = false)
+    private Long videoKey;
 }

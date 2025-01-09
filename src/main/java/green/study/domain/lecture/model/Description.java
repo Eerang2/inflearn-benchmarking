@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class LectureImage {
-
-    private String name;
-    private String path;
+public class Description {
+    private Long key;
+    private String content;
+    private Long lectureKey;
 }
