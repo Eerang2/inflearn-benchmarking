@@ -1,4 +1,4 @@
-package green.study.domain.config;
+package green.study.infrastructure.config;
 
 import green.study.presentation.interceptor.TokenArgumentResolver;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +10,8 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private TokenArgumentResolver tokenArgumentResolver;
-
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(tokenArgumentResolver);
+        resolvers.add(new TokenArgumentResolver());
     }
 }

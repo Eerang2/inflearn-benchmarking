@@ -1,8 +1,9 @@
 package green.study.presentation.controller;
 
 import green.study.application.member.MemberService;
-import green.study.domain.model.GetToken;
 import green.study.domain.member.model.Member;
+import green.study.domain.model.GetToken;
+import green.study.domain.model.Token;
 import green.study.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +21,11 @@ public class MainController {
     private final MemberService memberService;
 
     @GetMapping("/")
-    public String index(@GetToken final Object token,
-                        Model model) {
-
-        System.out.println(token);
-//        Member member = jwtUtil.getLoginUserFromAccessToken(token);
-//        log.debug(member.getMemberId());
-//        model.addAttribute("member", member);
+    public String index(@GetToken Token token, Model model) {
+        if (token != null) {
+            Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
+            model.addAttribute("member", member);
+        }
         return "index";
     }
 

@@ -2,6 +2,7 @@ package green.study.presentation.interceptor;
 
 import green.study.domain.model.GetToken;
 import green.study.domain.model.Token;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -24,14 +25,21 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
                                   WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        // Authorization 헤더에서 토큰 추출
-        String authorizationHeader = request.getHeader("Authorization");
         String tokenValue = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            tokenValue = authorizationHeader.substring(7);
+        // 쿠키에서 JWT 토큰 검색
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("JWT_TOKEN".equals(cookie.getName())) {
+                    tokenValue = cookie.getValue();
+                    break;
+                }
+            }
         }
-
-        return new Token(tokenValue); // Token 객체 반환
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            return null;
+        }
+        return new Token(tokenValue);
     }
 }
