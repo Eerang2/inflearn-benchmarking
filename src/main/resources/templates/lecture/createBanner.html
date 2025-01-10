@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강의 등록 - 배너 및 제목</title>
+    <link rel="stylesheet" href="/css/lecture/createLecture.css">
+</head>
+<body>
+<div class="container">
+    <h1>강의 등록</h1>
+    <nav>
+        <ul>
+            <li class="active">배너 및 제목</li>
+            <li>강의 소개</li>
+            <li>영상 업로드</li>
+        </ul>
+    </nav>
+    <div class="form">
+        <label for="banner">배너 이미지 업로드:</label>
+        <input type="file" id="banner" accept="image/*">
+
+        <label for="title">강의 제목:</label>
+        <input type="text" id="title" placeholder="강의 제목을 입력하세요">
+
+        <div class="tags-container">
+            <div class="tag-group">
+                <label for="mainCategory">대분류 태그:</label>
+                <select id="mainCategory">
+                    <option value="">대분류를 선택하세요</option>
+                    <!-- 대분류 옵션 -->
+                    <th:block th:each="category : ${mainCategories}">
+                        <option th:value="${category.name}" th:text="${category.displayName}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="tag-group">
+                <label>소분류 태그:</label>
+                <div id="subTagsContainer">
+                    <!-- 소분류 태그가 동적으로 추가됩니다 -->
+                    <p>대분류를 선택하세요</p>
+                </div>
+            </div>
+        </div>
+
+        <button id="addTagButton" class="hidden">+</button>
+
+        <button id="next">다음 단계</button>
+    </div>
+</div>
+<script src="/js/lecture/createBanner.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Fragment</title>
+
+</head>
+<body>
+<header th:fragment="header">
+    <h2 style="color: white">Web Study</h2>
+    <nav>
+        <a href="#">강의</a>
+        <a href="#">로드맵</a>
+        <a href="#">멘토링</a>
+        <a href="#">커뮤니티</a>
+    </nav>
+
+    <div>
+        <!-- 사용자 정보가 없는 경우 로그인 버튼 노출 -->
+        <button class="login" onclick="location.href='/login'">로그인</button>
+
+    </div>
+</header>
+</body>
+</html>
