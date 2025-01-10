@@ -1,11 +1,9 @@
 package green.study.presentation.api;
 
 import green.study.application.member.MemberService;
-import green.study.domain.member.model.Member;
 import green.study.infrastructure.util.CookieUtil;
 import green.study.presentation.dto.MemberReq;
 import green.study.presentation.dto.MemberRes;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -74,4 +72,5 @@ public class MemberRestController {
             }
         }
     }
+
 }

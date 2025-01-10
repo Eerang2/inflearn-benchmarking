@@ -1,6 +1,7 @@
 package green.study.presentation.controller;
 
 import green.study.application.member.MemberService;
+import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.member.model.Member;
 import green.study.domain.model.GetToken;
 import green.study.domain.model.Token;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Arrays;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -46,5 +50,23 @@ public class MainController {
         Member member = memberService.findByKey(key);
         model.addAttribute("member", member);
         return "member/mypage";
+    }
+
+    @GetMapping("/create/banner")
+    public String getCategories(Model model) {
+        // 대분류 전달
+        model.addAttribute("mainCategories",
+                Arrays.stream(MainTags.values())
+                        .map(this::toCategoryMap)
+                        .toList()
+        );
+        return "lecture/createBanner";
+    }
+
+    private Map<String, String> toCategoryMap(MainTags category) {
+        return Map.of(
+                "name", category.name(),
+                "displayName", category.getDisplayName()
+        );
     }
 }

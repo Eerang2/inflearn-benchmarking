@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    flex-direction: column; /* 위에서 아래로 정렬 */
+}
+header {
+    background-color: #4CAF50;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+header img {
+    height: 40px;
+}
+.login {
+    padding: 10px 20px;
+    border: none;
+    background-color: white;
+    color: #4CAF50;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+}
+nav {
+    display: flex;
+    gap: 15px;
+}
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}

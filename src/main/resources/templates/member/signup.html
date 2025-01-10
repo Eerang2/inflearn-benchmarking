@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
-    <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/member/signup.css">
 </head>
 <body>
-<header>
-    <h1 class="logo">TasteMate</h1>
-    <div class="dropdown">
-        <button class="logout-button dropdown-toggle">메뉴</button>
-        <ul class="dropdown-menu hidden">
-            <li><a href="login.html">로그인</a></li>
-        </ul>
-    </div>
-</header>
+<div th:replace="/fragments/header.html :: header(${member})"></div>
 <!-- 회원가입 페이지 -->
 <div class="container" id="signup-container">
     <h2>회원가입</h2>
