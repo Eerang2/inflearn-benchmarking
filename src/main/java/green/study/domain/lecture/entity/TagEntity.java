@@ -15,4 +15,7 @@ public class TagEntity {
     private String tagName;
 
     private Long parentsTagId;
+
+    @Column(name = "lecture_key", nullable = false)
+    private Long lectureKey;
 }

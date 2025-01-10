@@ -1,10 +1,10 @@
 package green.study.domain.lecture.entity;
 
-import green.study.domain.lecture.model.LectureImage;
-import green.study.domain.member.entity.MemberEntity;
 import jakarta.persistence.*;
-import lombok.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
@@ -25,5 +25,14 @@ public class LectureEntity {
 
     @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private String imageName;
+
+    @Column(name = "image_unique_path",nullable = false)
+    private String imageUniquePath;
+
+    @Column(name = "member_key", nullable = false)
+    private Long memberKey;
 
 }
