@@ -8,5 +8,6 @@ import lombok.Getter;
 public class LectureImage {
 
     private String name;
+    private String uniqueName;
     private String path;
 }

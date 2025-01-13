@@ -30,7 +30,7 @@
                     <option value="">대분류를 선택하세요</option>
                     <!-- 대분류 옵션 -->
                     <th:block th:each="category : ${mainCategories}">
-                        <option th:value="${category.name}" th:text="${category.displayName}"></option>
+                        <option th:value="${category.name}" id="mainTag" th:text="${category.displayName}"></option>
                     </th:block>
                 </select>
             </div>

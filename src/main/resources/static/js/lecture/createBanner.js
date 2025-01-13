@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const banner = document.getElementById("banner");
+    const title = document.getElementById("title");
     const mainCategory = document.getElementById("mainCategory");
     const subTagsContainer = document.getElementById("subTagsContainer");
     const addTagButton = document.getElementById("addTagButton");
@@ -74,5 +76,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
             subTagsContainer.appendChild(tagDiv);
         }
+    });
+    document.getElementById("next").addEventListener("click", () => {
+        console.log(banner.files[0])
+        const postData = {
+            title: title.value,
+            banner: banner.files[0],
+            mainCategory: mainCategory.value,
+            subTags: []
+        };
+
+        // 선택된 소분류 태그 가져오기
+        const selectedTags = document.querySelectorAll(".tag-item.selected");
+        selectedTags.forEach(tag => {
+            postData.subTags.push(tag.textContent.trim());
+        });
+
+        // AJAX 요청
+        $.ajax({
+            url: '/api/create/banner',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            contentType: 'application/json',
+            success: (response) => {
+                alert("배너 및 제목이 저장되었습니다.");
+                window.location.href = "/lecture/create/introduction"; // 다음 단계로 이동
+            },
+            error: (xhr, status, error) => {
+                console.error("Error saving banner:", error);
+                alert("배너 저장 중 오류가 발생했습니다.");
+            }
+        });
     });
 });
