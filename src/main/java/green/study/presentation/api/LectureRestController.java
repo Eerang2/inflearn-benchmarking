@@ -11,6 +11,7 @@ import green.study.domain.model.Token;
 import green.study.infrastructure.util.JwtUtil;
 import green.study.presentation.dto.LectureReq;
 import green.study.presentation.dto.LectureSubTagsRes;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class LectureRestController {
 
     @PostMapping("/create/banner")
     public ResponseEntity<String> createBanner(@GetToken Token token,
-                                               @RequestBody LectureReq.Banner bannerReq) {
+                                               @RequestBody @Valid LectureReq.Banner bannerReq) {
 
         if (token == null) {
             throw new ExpiredTokenException();
@@ -50,5 +51,11 @@ public class LectureRestController {
     @PostMapping("/create/thumbnail")
     public LectureImage createThumbnail(@RequestParam("banner") MultipartFile thumbnail) throws IOException {
         return imageUploadService.uploadAccommodationImage(thumbnail);
+    }
+
+    @PostMapping("/create/description")
+    public ResponseEntity<String> createDescription(@RequestBody @Valid LectureReq.Description description) {
+
+        return null;
     }
 }
