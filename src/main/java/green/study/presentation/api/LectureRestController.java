@@ -54,8 +54,14 @@ public class LectureRestController {
     }
 
     @PostMapping("/create/description")
-    public ResponseEntity<String> createDescription(@RequestBody @Valid LectureReq.Description description) {
+    public ResponseEntity<String> createDescription(@RequestBody @Valid LectureReq.Description description,
+                                                    @GetToken Token token) {
 
-        return null;
+        if (token == null) {
+            throw new ExpiredTokenException();
+        }
+        Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
+        lectureService.saveDescription(description.toDescription(member.getKey()));
+        return ResponseEntity.ok("create description");
     }
 }
