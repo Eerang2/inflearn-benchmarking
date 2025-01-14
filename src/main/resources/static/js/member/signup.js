@@ -1,6 +1,6 @@
 
 // DOM 요소
-const usernameInput = document.getElementById('user-id');
+const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 const confirmPasswordError = document.getElementById('confirm-password-error');
@@ -69,7 +69,7 @@ $(document).ready(function() {
 
         // 값들 콘솔에 찍어서 확인
         const postData = {
-            memberId: $('#user-id').val(),
+            memberId: $('#username').val(),
             password: $('#password').val(),
             confirmPassword: $('#confirm-password').val(),
             name: $('#name').val(),
