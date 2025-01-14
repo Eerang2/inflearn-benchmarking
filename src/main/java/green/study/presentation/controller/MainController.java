@@ -63,6 +63,11 @@ public class MainController {
         return "lecture/createBanner";
     }
 
+    @GetMapping("/create/introduction")
+    public String getIntroduce() {
+        return "lecture/createDescription";
+    }
+
     private Map<String, String> toCategoryMap(MainTags category) {
         return Map.of(
                 "name", category.name(),

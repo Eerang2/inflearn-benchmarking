@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     contentType: 'application/json',
                     success: (response) => {
                         alert("배너 및 제목이 저장되었습니다.");
-                        window.location.href = "/lecture/create/introduction"; // 다음 단계로 이동
+                        window.location.href = "/create/introduction"; // 다음 단계로 이동
                     },
                     error: (xhr, status, error) => {
                         console.error("Error saving banner:", error);
