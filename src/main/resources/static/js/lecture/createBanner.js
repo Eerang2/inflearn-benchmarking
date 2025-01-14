@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainCategory = document.getElementById("mainCategory");
     const subTagsContainer = document.getElementById("subTagsContainer");
     const addTagButton = document.getElementById("addTagButton");
+    const description = document.getElementById("description");
 
     // 대분류 선택 시 소분류 태그 초기화
     mainCategory.addEventListener("change", () => {
@@ -78,33 +79,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     document.getElementById("next").addEventListener("click", () => {
-        console.log(banner.files[0])
-        const postData = {
-            title: title.value,
-            banner: banner.files[0],
-            mainCategory: mainCategory.value,
-            subTags: []
-        };
+        // 1. FormData 객체 생성
+        const formData = new FormData();
 
-        // 선택된 소분류 태그 가져오기
-        const selectedTags = document.querySelectorAll(".tag-item.selected");
-        selectedTags.forEach(tag => {
-            postData.subTags.push(tag.textContent.trim());
-        });
+        // 2. 파일을 FormData에 추가 (banner 파일)
+        const file = banner.files[0];  // input[type="file"]에서 가져온 첫 번째 파일
+        formData.append('banner', file);
 
-        // AJAX 요청
         $.ajax({
-            url: '/api/create/banner',
+            url: '/api/create/thumbnail',
             type: 'POST',
-            data: JSON.stringify(postData),
-            contentType: 'application/json',
+            data: formData,
+            processData: false,  // jQuery가 데이터를 자동으로 처리하지 않도록 설정
+            contentType: false,  // `Content-Type`을 자동으로 설정하지 않도록 설정 (FormData에서 자동 처리)
             success: (response) => {
-                alert("배너 및 제목이 저장되었습니다.");
-                window.location.href = "/lecture/create/introduction"; // 다음 단계로 이동
+                const postData = {
+                    title: title.value,
+                    description: description.value,
+                    mainCategory: mainCategory.value,
+                    imageName: response.lectureImageName,
+                    imageUniquePath: response.uniquePath,
+                    subTags: []
+                };
+
+                // 소분류 태그 추가
+                const selectedTags = document.querySelectorAll(".tag-item.selected");
+                selectedTags.forEach(tag => {
+                    postData.subTags.push(tag.textContent.trim());
+                });
+                $.ajax({
+                    url: '/api/create/banner',
+                    type: 'POST',
+                    data: JSON.stringify(postData),
+                    contentType: 'application/json',
+                    success: (response) => {
+                        alert("배너 및 제목이 저장되었습니다.");
+                        window.location.href = "/lecture/create/introduction"; // 다음 단계로 이동
+                    },
+                    error: (xhr, status, error) => {
+                        console.error("Error saving banner:", error);
+                        alert("배너 저장 중 오류가 발생했습니다.");
+                    }
+                });
             },
             error: (xhr, status, error) => {
                 console.error("Error saving banner:", error);
-                alert("배너 저장 중 오류가 발생했습니다.");
+                alert("썸네일 저장 중 오류가 발생했습니다.");
             }
         });
     });

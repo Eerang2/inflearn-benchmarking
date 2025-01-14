@@ -1,4 +1,4 @@
-package green.study.domain.member.exceptions;
+package green.study.domain.exceptions;
 
 public class InvalidTokenException extends RuntimeException {
 

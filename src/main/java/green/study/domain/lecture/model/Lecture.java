@@ -1,5 +1,6 @@
 package green.study.domain.lecture.model;
 
+import green.study.domain.lecture.entity.LectureEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,4 +13,28 @@ public class Lecture {
     private String description;
     private LectureImage image;
     private Long memberKey;
+
+    public static Lecture from(LectureEntity entity) {
+        return Lecture.builder()
+                .key(entity.getKey())
+                .title(entity.getTitle())
+                .description(entity.getDescription())
+                .image(LectureImage.builder()
+                        .lectureImageName(entity.getImageName())
+                        .uniquePath(entity.getImageUniquePath())
+                        .build())
+                .memberKey(entity.getMemberKey())
+                .build();
+    }
+
+    public LectureEntity toEntity() {
+        return LectureEntity.builder()
+                .title(title)
+                .description(description)
+                .imageName(image.getLectureImageName())
+                .imageUniquePath(image.getUniquePath())
+                .memberKey(memberKey)
+                .build();
+
+    }
 }

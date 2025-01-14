@@ -1,7 +1,8 @@
 package green.study.presentation.dto;
 
+import green.study.domain.lecture.model.Lecture;
+import green.study.domain.lecture.model.LectureImage;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,10 +18,26 @@ public class LectureReq {
 
         private String title;
 
-        private MultipartFile banner;
+        private String description;
 
-        private String mainTag;
+        private String imageName;
+
+        private String imageUniquePath;
+
+        private String mainCategory;
 
         private List<String> subTags;
+
+        public Lecture toLecture(Long memberKey) {
+            return Lecture.builder()
+                    .title(title)
+                    .description(description)
+                    .image(LectureImage.builder()
+                            .lectureImageName(imageName)
+                            .uniquePath(imageUniquePath)
+                            .build())
+                    .memberKey(memberKey)
+                    .build();
+        }
     }
 }

@@ -1,9 +1,17 @@
 package green.study.domain.lecture.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "lecture_tag")
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TagEntity {
 
     @Id
