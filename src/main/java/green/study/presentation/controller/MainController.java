@@ -53,7 +53,7 @@ public class MainController {
     }
 
     @GetMapping("/create/banner")
-    public String getCategories(Model model) {
+    public String bannerForm(Model model) {
         // 대분류 전달
         model.addAttribute("mainCategories",
                 Arrays.stream(MainTags.values())
@@ -64,8 +64,13 @@ public class MainController {
     }
 
     @GetMapping("/create/introduction")
-    public String getIntroduce() {
+    public String introduceForm() {
         return "lecture/createDescription";
+    }
+
+    @GetMapping("/create/videoupload")
+    public String videoUploadForm() {
+        return "lecture/createVideo";
     }
 
     private Map<String, String> toCategoryMap(MainTags category) {

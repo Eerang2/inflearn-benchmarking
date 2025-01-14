@@ -64,4 +64,5 @@ public class LectureRestController {
         lectureService.saveDescription(description.toDescription(member.getKey()));
         return ResponseEntity.ok("create description");
     }
+
 }
