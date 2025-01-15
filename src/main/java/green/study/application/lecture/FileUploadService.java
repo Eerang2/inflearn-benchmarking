@@ -15,14 +15,18 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class ImageUploadService {
+public class FileUploadService {
 
-    @Value("${file.upload-dir}")
-    String UPLOAD_DIR;
+    @Value("${file.image.upload-dir}")
+    String IMAGE_UPLOAD_DIR;
+
+    @Value("${file.video.upload-dir}")
+    String VIDEO_UPLOAD_DIR;
+
 
 
     @Transactional
-    public LectureImage uploadAccommodationImage(MultipartFile imageFile) throws IOException {
+    public LectureImage uploadBanner(MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {
             throw new IOException("파일이 비어있습니다.");
         }
@@ -30,7 +34,7 @@ public class ImageUploadService {
         // 파일 이름에 UUID 추가
         final String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
         // 업로드 경로 절대 경로로 설정
-        Path uploadPath = Paths.get(System.getProperty("user.dir"), UPLOAD_DIR, fileName);
+        Path uploadPath = Paths.get(System.getProperty("user.dir"), IMAGE_UPLOAD_DIR, fileName);
 
         // 디렉토리가 존재하지 않으면 생성
         File directory = uploadPath.getParent().toFile();
@@ -48,5 +52,16 @@ public class ImageUploadService {
                 .uniquePath(fileName)
                 .path(uploadPath.toString()) // 절대 경로 반환
                 .build();
+    }
+
+    @Transactional
+    public void saveVideoToDisk(MultipartFile file) {
+        try {
+            File destination = new File("/upload/path/" + file.getOriginalFilename());
+            file.transferTo(destination);
+            System.out.println("Saved file: " + destination.getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 실패: " + file.getOriginalFilename(), e);
+        }
     }
 }
