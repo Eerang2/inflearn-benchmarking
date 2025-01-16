@@ -5,6 +5,7 @@ import green.study.domain.lecture.model.LectureImage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -66,4 +67,28 @@ public class LectureReq {
                     .build();
         }
     }
+
+
+
+    @Getter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class VideoDto {
+
+        private String videoTitle;
+        private MultipartFile videoFile;
+    }
+
+    @Getter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ChapterDto {
+        private String chapterName;
+        private List<VideoDto> videos;
+    }
+
 }

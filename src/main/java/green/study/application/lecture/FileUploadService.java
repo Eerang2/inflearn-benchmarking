@@ -1,6 +1,9 @@
 package green.study.application.lecture;
 
 import green.study.domain.lecture.model.LectureImage;
+import green.study.domain.lecture.model.Video;
+import green.study.presentation.dto.FileRes;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FileUploadService {
 
     @Value("${file.image.upload-dir}")
@@ -23,18 +27,37 @@ public class FileUploadService {
     @Value("${file.video.upload-dir}")
     String VIDEO_UPLOAD_DIR;
 
-
-
     @Transactional
     public LectureImage uploadBanner(MultipartFile imageFile) throws IOException {
-        if (imageFile.isEmpty()) {
+
+        FileRes fileRes = uploadFile(imageFile, IMAGE_UPLOAD_DIR);
+        // LectureImage 객체 반환
+        return LectureImage.builder()
+                .lectureImageName(imageFile.getOriginalFilename())
+                .uniquePath(fileRes.getFileName())
+                .path(fileRes.getFilePath().toString()) // 절대 경로 반환
+                .build();
+    }
+
+    @Transactional
+    public Video saveVideoToDisk(MultipartFile videoFile, String videoName) throws IOException {
+        FileRes fileRes = uploadFile(videoFile, VIDEO_UPLOAD_DIR);
+        return Video.builder()
+                .videoName(videoFile.getOriginalFilename())
+                .title(videoName)
+                .uniquePath(fileRes.getFilePath().toString())
+                .build();
+
+    }
+
+
+    private FileRes uploadFile(MultipartFile file, final String uploadDir) throws IOException {
+        if (file.isEmpty()) {
             throw new IOException("파일이 비어있습니다.");
         }
-
-        // 파일 이름에 UUID 추가
-        final String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+        final String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
         // 업로드 경로 절대 경로로 설정
-        Path uploadPath = Paths.get(System.getProperty("user.dir"), IMAGE_UPLOAD_DIR, fileName);
+        Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDir, fileName);
 
         // 디렉토리가 존재하지 않으면 생성
         File directory = uploadPath.getParent().toFile();
@@ -44,24 +67,11 @@ public class FileUploadService {
 
         // 파일 저장
         File destFile = uploadPath.toFile();
-        imageFile.transferTo(destFile); // 실제 파일 저장
+        file.transferTo(destFile); // 실제 파일 저장
 
-        // LectureImage 객체 반환
-        return LectureImage.builder()
-                .lectureImageName(imageFile.getOriginalFilename())
-                .uniquePath(fileName)
-                .path(uploadPath.toString()) // 절대 경로 반환
+        return FileRes.builder()
+                .fileName(fileName)
+                .filePath(uploadPath)
                 .build();
-    }
-
-    @Transactional
-    public void saveVideoToDisk(MultipartFile file) {
-        try {
-            File destination = new File("/upload/path/" + file.getOriginalFilename());
-            file.transferTo(destination);
-            System.out.println("Saved file: " + destination.getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException("파일 저장 실패: " + file.getOriginalFilename(), e);
-        }
     }
 }

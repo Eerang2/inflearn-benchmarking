@@ -1,14 +1,22 @@
 package green.study.domain.lecture.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "lecture_video")
-public class LectureVideoEntity {
+@Table(name = "lecture_chapter")
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ChapterEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_video_key")
+    @Column(name = "chapter_key")
     private Long key;
 
     private String chapter;
@@ -16,6 +24,4 @@ public class LectureVideoEntity {
     @Column(name = "lecture_key", nullable = false)
     private Long lectureKey;
 
-    @Column(name = "video_key", nullable = false)
-    private Long videoKey;
 }
