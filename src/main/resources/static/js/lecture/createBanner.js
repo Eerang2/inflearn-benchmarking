@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const subTagsContainer = document.getElementById("subTagsContainer");
     const addTagButton = document.getElementById("addTagButton");
     const description = document.getElementById("description");
+    const price = document.getElementById("price");
 
     // 대분류 선택 시 소분류 태그 초기화
     mainCategory.addEventListener("change", () => {
@@ -79,53 +80,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     document.getElementById("next").addEventListener("click", () => {
-        // 1. FormData 객체 생성
-        const formData = new FormData();
 
-        // 2. 파일을 FormData에 추가 (banner 파일)
-        const file = banner.files[0];  // input[type="file"]에서 가져온 첫 번째 파일
-        formData.append('banner', file);
+        const checkPrice = parseInt($("#price").val(), 10);
+        if (checkPrice === 0) {
+            if (confirm("이 작업을 진행하시겠습니까?")) {
+                // 1. FormData 객체 생성
+                const formData = new FormData();
 
-        $.ajax({
-            url: '/api/create/thumbnail',
-            type: 'POST',
-            data: formData,
-            processData: false,  // jQuery가 데이터를 자동으로 처리하지 않도록 설정
-            contentType: false,  // `Content-Type`을 자동으로 설정하지 않도록 설정 (FormData에서 자동 처리)
-            success: (response) => {
-                const postData = {
-                    title: title.value,
-                    description: description.value,
-                    mainCategory: mainCategory.value,
-                    imageName: response.lectureImageName,
-                    imageUniquePath: response.uniquePath,
-                    subTags: []
-                };
+            // 2. 파일을 FormData에 추가 (banner 파일)
+            const file = banner.files[0];  // input[type="file"]에서 가져온 첫 번째 파일
+            formData.append('banner', file);
 
-                // 소분류 태그 추가
-                const selectedTags = document.querySelectorAll(".tag-item.selected");
-                selectedTags.forEach(tag => {
-                    postData.subTags.push(tag.textContent.trim());
-                });
-                $.ajax({
-                    url: '/api/create/banner',
-                    type: 'POST',
-                    data: JSON.stringify(postData),
-                    contentType: 'application/json',
-                    success: (response) => {
-                        alert("배너 및 제목이 저장되었습니다.");
-                        window.location.href = "/create/introduction"; // 다음 단계로 이동
-                    },
-                    error: (xhr, status, error) => {
-                        console.error("Error saving banner:", error);
-                        alert("배너 저장 중 오류가 발생했습니다.");
-                    }
-                });
-            },
-            error: (xhr, status, error) => {
-                console.error("Error saving banner:", error);
-                alert("썸네일 저장 중 오류가 발생했습니다.");
-            }
-        });
+            $.ajax({
+                url: '/api/create/thumbnail',
+                type: 'POST',
+                data: formData,
+                processData: false,  // jQuery가 데이터를 자동으로 처리하지 않도록 설정
+                contentType: false,  // `Content-Type`을 자동으로 설정하지 않도록 설정 (FormData에서 자동 처리)
+                success: (response) => {
+                    const postData = {
+                        title: title.value,
+                        description: description.value,
+                        price: price.value,
+                        mainCategory: mainCategory.value,
+                        imageName: response.lectureImageName,
+                        imageUniquePath: response.uniquePath,
+                        subTags: []
+                    };
+
+                    // 소분류 태그 추가
+                    const selectedTags = document.querySelectorAll(".tag-item.selected");
+                    selectedTags.forEach(tag => {
+                        postData.subTags.push(tag.textContent.trim());
+                    });
+                    $.ajax({
+                        url: '/api/create/banner',
+                        type: 'POST',
+                        data: JSON.stringify(postData),
+                        contentType: 'application/json',
+                        success: (response) => {
+                            alert("배너 및 제목이 저장되었습니다.");
+                            window.location.href = "/create/introduction"; // 다음 단계로 이동
+                        },
+                        error: (xhr, status, error) => {
+                            console.error("Error saving banner:", error);
+                            alert("배너 저장 중 오류가 발생했습니다.");
+                        }
+                    });
+                },
+                error: (xhr, status, error) => {
+                    console.error("Error saving banner:", error);
+                    alert("썸네일 저장 중 오류가 발생했습니다.");
+                }
+            });
+        }
+        else {
+            alert("0원 확인을 취소했습니다.");
+        }}});
     });
-});
+

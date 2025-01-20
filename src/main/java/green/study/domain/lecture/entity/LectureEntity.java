@@ -27,6 +27,9 @@ public class LectureEntity {
     private String description;
 
     @Column(nullable = false)
+    private Double price;
+
+    @Column(nullable = false)
     private String imageName;
 
     @Column(name = "image_unique_path",nullable = false)

@@ -25,7 +25,7 @@ public class LectureReq {
         @NotBlank(message = "대표설명은 필수입니다.")
         private String description;
 
-        @NotBlank(message = "가격은 필수입니다.")
+        @NotNull
         private Double price;
 
         @NotBlank(message = "이미지가 비어있습니다.")

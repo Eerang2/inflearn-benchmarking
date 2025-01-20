@@ -10,6 +10,7 @@ public class Lecture {
 
     private Long key;
     private String title;
+    private Double price;
     private String description;
     private LectureImage image;
     private Long memberKey;
@@ -18,6 +19,7 @@ public class Lecture {
         return Lecture.builder()
                 .key(entity.getKey())
                 .title(entity.getTitle())
+                .price(entity.getPrice())
                 .description(entity.getDescription())
                 .image(LectureImage.builder()
                         .lectureImageName(entity.getImageName())
@@ -31,6 +33,7 @@ public class Lecture {
         return LectureEntity.builder()
                 .title(title)
                 .description(description)
+                .price(price)
                 .imageName(image.getLectureImageName())
                 .imageUniquePath(image.getUniquePath())
                 .memberKey(memberKey)
