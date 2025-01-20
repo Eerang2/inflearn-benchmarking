@@ -93,13 +93,17 @@ public class LectureRestController {
 
         Long lectureKey = lectureService.findLectureByMemberKey(member.getKey());
         for (LectureReq.ChapterDto chapter : chapters) {
+
+            // DB 저장
             Chapter lectureVideo = lectureService.saveChapter(chapter.getChapterName(), lectureKey);
             for (LectureReq.VideoDto video : chapter.getVideos()) {
+
+                // 파일 업로드
                 MultipartFile videoFile = videoFiles.get(fileIndex); // 파일 매칭
+
+                // DB 저장
                 Video uploaded = fileUploadService.saveVideoToDisk(videoFile, video.getVideoTitle());
                 lectureService.saveVideo(uploaded, lectureVideo.getKey());
-                System.out.println("Video Title: " + video.getVideoTitle());
-                System.out.println("Video File: " + videoFile.getOriginalFilename());
                 fileIndex++;
             }
         }

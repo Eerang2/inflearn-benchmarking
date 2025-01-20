@@ -25,6 +25,9 @@ public class LectureReq {
         @NotBlank(message = "대표설명은 필수입니다.")
         private String description;
 
+        @NotBlank(message = "가격은 필수입니다.")
+        private Double price;
+
         @NotBlank(message = "이미지가 비어있습니다.")
         private String imageName;
 
@@ -40,6 +43,7 @@ public class LectureReq {
         public Lecture toLecture(Long memberKey) {
             return Lecture.builder()
                     .title(title)
+                    .price(price)
                     .description(description)
                     .image(LectureImage.builder()
                             .lectureImageName(imageName)

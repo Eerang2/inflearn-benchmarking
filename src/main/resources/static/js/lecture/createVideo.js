@@ -100,6 +100,7 @@ document.getElementById('finish').addEventListener('click', () => {
         contentType: false,
         success: (response) => {
             alert('강의 등록이 완료되었습니다!');
+            window.location.href="/"
         },
         error: (xhr) => {
             console.error(xhr.responseText);
