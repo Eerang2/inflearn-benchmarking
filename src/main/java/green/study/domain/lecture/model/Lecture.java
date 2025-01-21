@@ -10,7 +10,7 @@ public class Lecture {
 
     private Long key;
     private String title;
-    private Double price;
+    private int price;
     private String description;
     private LectureImage image;
     private Long memberKey;

@@ -35,10 +35,10 @@ public class LectureService {
     }
 
     @Transactional
-    public void createBanner(Lecture lecture, String mainTag, List<String> subTags) {
+    public void createBanner(Lecture lecture, MainTags mainTag, List<SubTags> subTags) {
         LectureEntity save = lectureRepository.save(lecture.toEntity());
         TagEntity savedMainTag = saveMainTag(mainTag, save.getKey());
-        for (String subTag : subTags) {
+        for (SubTags subTag : subTags) {
             saveSubTags(subTag, save.getKey(), savedMainTag.getKey());
         }
     }
@@ -59,11 +59,11 @@ public class LectureService {
         return lectureEntity.getKey();
     }
 
-    public final TagEntity saveMainTag(String mainTag, long lectureKey) {
+    public final TagEntity saveMainTag(MainTags mainTag, long lectureKey) {
         return lectureTagsRepository.save(LectureTags.toMainTagEntity(mainTag, lectureKey));
     }
 
-    public final void saveSubTags(String subTag, long lectureKey, long mainTagKey) {
+    public final void saveSubTags(SubTags subTag, long lectureKey, long mainTagKey) {
         lectureTagsRepository.save(LectureTags.toSubTagEntity(subTag, lectureKey, mainTagKey));
     }
 

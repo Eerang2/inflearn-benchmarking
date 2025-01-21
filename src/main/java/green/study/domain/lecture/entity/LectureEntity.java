@@ -27,7 +27,7 @@ public class LectureEntity {
     private String description;
 
     @Column(nullable = false)
-    private Double price;
+    private int price;
 
     @Column(nullable = false)
     private String imageName;

@@ -1,5 +1,6 @@
 package green.study.application.member.service;
 
+import green.study.application.common.BaseTest;
 import green.study.application.member.MemberService;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.enums.MemberType;
@@ -10,18 +11,14 @@ import green.study.infrastructure.repository.MemberRepository;
 import green.study.presentation.dto.MemberRes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class MemberServiceTest {
+
+class MemberServiceTest extends BaseTest {
 
     @Autowired
     private MemberService memberService;

@@ -1,5 +1,7 @@
 package green.study.presentation.dto;
 
+import green.study.domain.lecture.enums.MainTags;
+import green.study.domain.lecture.enums.SubTags;
 import green.study.domain.lecture.model.Lecture;
 import green.study.domain.lecture.model.LectureImage;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +28,7 @@ public class LectureReq {
         private String description;
 
         @NotNull
-        private Double price;
+        private int price;
 
         @NotBlank(message = "이미지가 비어있습니다.")
         private String imageName;
@@ -35,10 +37,10 @@ public class LectureReq {
         private String imageUniquePath;
 
         @NotNull
-        private String mainCategory;
+        private MainTags mainCategory;
 
         @NotBlank(message = "소분류 태그는 필수입니다.")
-        private List<String> subTags;
+        private List<SubTags> subTags;
 
         public Lecture toLecture(Long memberKey) {
             return Lecture.builder()
