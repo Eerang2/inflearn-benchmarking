@@ -17,6 +17,7 @@
             <li data-section="courses">My Courses</li>
             <li data-section="profile">Profile</li>
             <li data-section="settings">Settings</li>
+            <li th:if="${type} == 'ADMIN_TYPE'" data-section="enroll">Enroll</li>
         </ul>
     </aside>
 
@@ -50,6 +51,10 @@
         <div id="settings" class="section" style="display: none;">
             <h2>Settings</h2>
             <div class="content-body"></div>
+        </div>
+        <div id="enroll" class="section" style="display: none;">
+            <h2>enroll</h2>
+            <div class="content-body"> <a href="/create/banner">강의 등록하기</a></div>
         </div>
     </section>
 </main>

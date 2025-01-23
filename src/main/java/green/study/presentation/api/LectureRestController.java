@@ -88,7 +88,7 @@ public class LectureRestController {
 
 
 
-    // Json 객체 Java 객체로 parsing 메서드
+    // Json 객체 Java 객체로 parsing하는 메서드
     private List<LectureReq.ChapterDto> parseMetadata(String postData) {
         try {
             return objectMapper.readValue(postData, new TypeReference<>() {});

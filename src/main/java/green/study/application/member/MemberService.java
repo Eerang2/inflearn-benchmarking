@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -45,6 +43,10 @@ public class MemberService {
         // 사용자 조회
         MemberEntity memberEntity = memberRepository.findByMemberId(member.getMemberId())
                 .orElseThrow(() -> new MemberIdValidateException("사용자를 찾을 수 없습니다."));
+
+        if (!member.getType().equals(memberEntity.getType())) {
+            throw new RuntimeException("사용자를 찾을수 없습니다.");
+        }
 
         // 비번 확인
         if (!memberEntity.getPassword().equals(member.getPassword())) {

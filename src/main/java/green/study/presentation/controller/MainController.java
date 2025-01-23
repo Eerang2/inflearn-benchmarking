@@ -49,6 +49,7 @@ public class MainController {
         // security 로 url 접속 차단
         Member member = memberService.findByKey(key);
         model.addAttribute("member", member);
+        model.addAttribute("type", member.getType().getValue());
         return "member/mypage";
     }
 

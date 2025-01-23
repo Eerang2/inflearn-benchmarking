@@ -67,6 +67,10 @@ public class MemberRestController {
                 resHtml = "<p>Manage your account settings and preferences.</p>";
                 return Map.of("html", resHtml);
             }
+            case "enroll" -> {
+                resHtml = "<p> your account settings and preferences.</p>";
+                return Map.of("html", resHtml);
+            }
             default -> {
                 return null;
             }
