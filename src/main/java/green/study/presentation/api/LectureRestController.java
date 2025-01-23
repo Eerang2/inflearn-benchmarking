@@ -71,12 +71,12 @@ public class LectureRestController {
     }
 
     @PostMapping("/save/lecture-video")
-    public ResponseEntity<String> saveLectureVideoRelation(@RequestPart("metadata") String metadata,
+    public ResponseEntity<String> saveLectureVideoRelation(@RequestPart("postdata") String postData,
                                                            @RequestPart("videoFiles") List<MultipartFile> videoFiles,
                                                            @GetToken Token token) throws IOException {
 
         validateToken(token);
-        List<LectureReq.ChapterDto> chapters = parseMetadata(metadata);
+        List<LectureReq.ChapterDto> chapters = parseMetadata(postData);
 
         Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
         Long lectureKey = lectureService.findLectureByMemberKey(member.getKey());
@@ -89,9 +89,9 @@ public class LectureRestController {
 
 
     // Json 객체 Java 객체로 parsing 메서드
-    private List<LectureReq.ChapterDto> parseMetadata(String metadata) {
+    private List<LectureReq.ChapterDto> parseMetadata(String postData) {
         try {
-            return objectMapper.readValue(metadata, new TypeReference<>() {});
+            return objectMapper.readValue(postData, new TypeReference<>() {});
         } catch (Exception e) {
             throw new InvalidMetadataException("Invalid metadata format", e);
         }

@@ -1,7 +1,6 @@
 package green.study.presentation.dto;
 
 import green.study.domain.lecture.enums.MainTags;
-import green.study.domain.lecture.enums.SubTags;
 import green.study.domain.lecture.model.Lecture;
 import green.study.domain.lecture.model.LectureImage;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +39,7 @@ public class LectureReq {
         private MainTags mainCategory;
 
         @NotBlank(message = "소분류 태그는 필수입니다.")
-        private List<SubTags> subTags;
+        private List<String> subTags;
 
         public Lecture toLecture(Long memberKey) {
             return Lecture.builder()

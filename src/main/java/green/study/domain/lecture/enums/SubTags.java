@@ -41,4 +41,5 @@ public enum SubTags {
                 .filter(subTag -> subTag.getMainTags().equals(mainTag))
                 .collect(Collectors.toList());
     }
+
 }

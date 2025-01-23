@@ -2,7 +2,6 @@ package green.study.domain.lecture.model;
 
 import green.study.domain.lecture.entity.TagEntity;
 import green.study.domain.lecture.enums.MainTags;
-import green.study.domain.lecture.enums.SubTags;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,9 +21,9 @@ public class LectureTags {
                 .build();
     }
 
-    public static TagEntity toSubTagEntity(SubTags tagName, Long lectureKey, Long parentKey) {
+    public static TagEntity toSubTagEntity(String tagName, Long lectureKey, Long parentKey) {
         return TagEntity.builder()
-                .tagName(tagName.name())
+                .tagName(tagName)
                 .parentsTagId(parentKey)
                 .lectureKey(lectureKey)
                 .build();
