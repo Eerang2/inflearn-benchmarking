@@ -1,30 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const sidebarLinks = document.querySelectorAll(".sidebar ul li a");
+    const sidebarLinks = document.querySelectorAll(".sidebar ul li");
     const sections = document.querySelectorAll(".content .section");
 
-    // 사이드바의 각 링크에 클릭 이벤트를 추가
     sidebarLinks.forEach(link => {
-        link.addEventListener("click", (event) => {
-            event.preventDefault(); // 기본 동작(페이지 이동)을 막음
+        link.addEventListener("click", () => {
+            const sectionId = link.getAttribute("data-section");
 
-            // 선택된 링크를 강조 표시
-            sidebarLinks.forEach(link => link.classList.remove("active")); // 모든 링크에서 active 클래스 제거
-            link.classList.add("active"); // 현재 클릭된 링크에 active 클래스 추가
-
-            // 클릭된 링크에 연결된 섹션 표시
-            const targetId = link.getAttribute("href").substring(1); // 링크의 href 속성에서 섹션 ID 추출
+            // 모든 섹션 숨기기
             sections.forEach(section => {
-                if (section.id === targetId) {
-                    section.style.display = "block"; // 해당 ID의 섹션을 표시
-                } else {
-                    section.style.display = "none"; // 나머지 섹션은 숨김
-                }
+                section.style.display = "none";
             });
+
+            // 선택한 섹션 표시
+            const activeSection = document.getElementById(sectionId);
+            activeSection.style.display = "block";
+
+            // 데이터 로드 및 업데이트
+            loadSectionData(sectionId);
         });
     });
 
-    // 첫 번째 섹션만 기본적으로 표시하고 나머지는 숨김
-    sections.forEach((section, index) => {
-        section.style.display = index === 0 ? "block" : "none";
-    });
+    // 기본적으로 첫 번째 섹션 표시
+    const defaultSection = document.querySelector(".content .section");
+    defaultSection.style.display = "block";
 });
+function loadSectionData(sectionId) {
+    $.ajax({
+        url: `/api/mypage/${sectionId}`,
+        type: "POST",
+        success: function(data) {
+            const activeSection = document.getElementById(sectionId);
+            const contentBody = activeSection.querySelector(".content-body");
+            contentBody.innerHTML = ''; // 기존 내용을 비우고
+
+            console.log(data.bannerPath)
+            // 데이터가 존재하는 경우에만 처리
+            if (data.html && data.html.length > 0) {
+                data.html.forEach(item => {
+                    let courseDiv = document.createElement('div');
+                    courseDiv.classList.add('course-item');
+                    courseDiv.innerHTML = `
+                        <img src="${data.bannerPath}" alt="${data.bannerName}">
+                        <h3>${data.title}</h3>
+                        <p>Price: ${data.price}</p>
+                    `;
+                    contentBody.appendChild(courseDiv);
+                });
+            } else {
+                // 데이터가 없는 경우 메시지 표시
+                contentBody.innerHTML = '<p>No courses available</p>';
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}

@@ -9,7 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div th:replace="/fragments/header.html :: header(${member})"></div>
+<div th:replace="~{/fragments/header.html :: header(${member})}"></div>
+
 <main>
     <aside class="sidebar">
         <ul>
@@ -54,7 +55,8 @@
         </div>
         <div id="enroll" class="section" style="display: none;">
             <h2>enroll</h2>
-            <div class="content-body"> <a href="/create/banner">강의 등록하기</a></div>
+            <div class="content-body"></div>
+            <a href="/create/banner">강의 등록하기</a>
         </div>
     </section>
 </main>
@@ -63,42 +65,7 @@
 </footer>
 <script src="/js/member/mypage.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const sidebarLinks = document.querySelectorAll(".sidebar ul li");
-        const sections = document.querySelectorAll(".content .section");
 
-        sidebarLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                const sectionId = link.getAttribute("data-section");
-
-                // 모든 섹션 숨기기
-                sections.forEach(section => {
-                    section.style.display = "none";
-                });
-
-                // 선택한 섹션 표시
-                const activeSection = document.getElementById(sectionId);
-                activeSection.style.display = "block";
-
-                // AJAX 호출
-                $.ajax({
-                    url: `/api/member/mypage/${sectionId}`,
-                    type: "POST",
-                    success: function (data) {
-                        // 받은 데이터로 섹션 내용 업데이트
-                        activeSection.querySelector(".content-body").innerHTML = data.html;
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error:", error);
-                    }
-                });
-            });
-        });
-
-        // 기본적으로 첫 번째 섹션 표시
-        const defaultSection = document.querySelector(".content .section");
-        defaultSection.style.display = "block";
-    });
 </script>
 </body>
 </html>

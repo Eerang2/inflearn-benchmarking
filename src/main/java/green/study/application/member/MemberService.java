@@ -6,7 +6,7 @@ import green.study.domain.member.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.model.Member;
 import green.study.infrastructure.repository.MemberRepository;
 import green.study.infrastructure.util.JwtUtil;
-import green.study.presentation.dto.MemberRes;
+import green.study.presentation.member.dto.MemberRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
