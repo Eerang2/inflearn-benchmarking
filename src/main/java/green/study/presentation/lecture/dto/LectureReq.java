@@ -1,4 +1,4 @@
-package green.study.presentation.dto;
+package green.study.presentation.lecture.dto;
 
 import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.lecture.model.Lecture;

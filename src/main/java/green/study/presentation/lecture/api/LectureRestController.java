@@ -1,4 +1,4 @@
-package green.study.presentation.api;
+package green.study.presentation.lecture.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,8 +13,8 @@ import green.study.domain.member.model.Member;
 import green.study.domain.model.GetToken;
 import green.study.domain.model.Token;
 import green.study.infrastructure.util.JwtUtil;
-import green.study.presentation.dto.LectureReq;
-import green.study.presentation.dto.LectureSubTagsRes;
+import green.study.presentation.lecture.dto.LectureReq;
+import green.study.presentation.lecture.dto.LectureSubTagsRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

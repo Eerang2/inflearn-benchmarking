@@ -1,4 +1,4 @@
-package green.study.presentation.dto;
+package green.study.presentation.lecture.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

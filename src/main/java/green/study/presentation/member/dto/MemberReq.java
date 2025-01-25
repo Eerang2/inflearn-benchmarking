@@ -1,7 +1,7 @@
-package green.study.presentation.dto;
+package green.study.presentation.member.dto;
 
-import green.study.domain.member.model.Member;
 import green.study.domain.member.enums.MemberType;
+import green.study.domain.member.model.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -69,4 +69,14 @@ public class MemberReq {
                     .build();
         }
     }
+
+    @Getter
+    @Builder
+    public static class Course {
+        private String bannerPath;
+        private String bannerName;
+        private String title;
+        private int price;
+    }
+
 }

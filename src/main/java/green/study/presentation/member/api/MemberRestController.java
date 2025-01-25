@@ -1,17 +1,16 @@
-package green.study.presentation.api;
+package green.study.presentation.member.api;
 
 import green.study.application.member.MemberService;
 import green.study.infrastructure.util.CookieUtil;
-import green.study.presentation.dto.MemberReq;
-import green.study.presentation.dto.MemberRes;
+import green.study.presentation.member.dto.MemberReq;
+import green.study.presentation.member.dto.MemberRes;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 @RestController
@@ -48,28 +47,23 @@ public class MemberRestController {
 
     }
     @PostMapping("/mypage/{section}")
-    public  Map<String, String> loadPage(@PathVariable String section) {
+    public   MemberReq.Course loadPage(@PathVariable String section, Model model) {
         String resHtml;
         switch (section) {
             case "dashboard" -> {
-                resHtml = "<p>Welcome to your dashboard! Here you can see your progress and activity.</p>";
-                return Map.of("html", resHtml);
+                return MemberReq.Course.builder().bannerName("제목").bannerPath("e4b59221-01c1-4d11-908a-5bb55bb7f197_객실 1.png").price(100000).title("제목111").build();
             }
             case "courses" -> {
-                resHtml = "<p>You are enrolled in the following courses:</p><ul><li>JavaScript for Beginners</li><li>Advanced CSS Techniques</li><li>Mastering React</li></ul>";
-                return Map.of("html", resHtml);
+                return MemberReq.Course.builder().bannerName("제목").bannerPath("e4b59221-01c1-4d11-908a-5bb55bb7f197_객실 1.png").price(100000).title("제목111").build();
             }
             case "profile" -> {
-                resHtml = "<p>Update your profile details here.</p>";
-                return Map.of("html", resHtml);
+                return MemberReq.Course.builder().bannerName("제목").bannerPath("e4b59221-01c1-4d11-908a-5bb55bb7f197_객실 1.png").price(100000).title("제목111").build();
             }
             case "settings" -> {
-                resHtml = "<p>Manage your account settings and preferences.</p>";
-                return Map.of("html", resHtml);
+                return MemberReq.Course.builder().bannerName("제목").bannerPath("e4b59221-01c1-4d11-908a-5bb55bb7f197_객실 1.png").price(100000).title("제목111").build();
             }
             case "enroll" -> {
-                resHtml = "<p> your account settings and preferences.</p>";
-                return Map.of("html", resHtml);
+                return MemberReq.Course.builder().bannerName("제목").bannerPath("e4b59221-01c1-4d11-908a-5bb55bb7f197_객실 1.png").price(100000).title("제목111").build();
             }
             default -> {
                 return null;

@@ -1,4 +1,4 @@
-package green.study.presentation.dto;
+package green.study.presentation.member.dto;
 
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.enums.MemberType;

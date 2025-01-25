@@ -6,7 +6,7 @@ import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.lecture.enums.SubTags;
 import green.study.domain.lecture.model.*;
 import green.study.infrastructure.*;
-import green.study.presentation.dto.LectureSubTagsRes;
+import green.study.presentation.lecture.dto.LectureSubTagsRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
