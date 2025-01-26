@@ -1,7 +1,6 @@
 package green.study.application.member.service;
 
 import green.study.application.common.BaseTest;
-import green.study.application.member.MemberService;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.enums.MemberType;
 import green.study.domain.member.exceptions.registers.MemberIdValidateException;

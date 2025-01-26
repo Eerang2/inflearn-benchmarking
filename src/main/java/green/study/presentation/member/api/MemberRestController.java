@@ -1,6 +1,6 @@
 package green.study.presentation.member.api;
 
-import green.study.application.member.MemberService;
+import green.study.application.member.service.MemberService;
 import green.study.infrastructure.util.CookieUtil;
 import green.study.presentation.member.dto.MemberReq;
 import green.study.presentation.member.dto.MemberRes;

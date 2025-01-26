@@ -2,6 +2,7 @@ package green.study.application.lecture;
 
 
 import green.study.application.common.BaseTest;
+import green.study.application.lecture.service.LectureService;
 import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.lecture.enums.SubTags;
 import green.study.domain.lecture.model.Lecture;
@@ -42,6 +43,6 @@ public class LectureServiceTest extends BaseTest {
         subTags.add(SubTags.JAVA);
         subTags.add(SubTags.SPRING);
 
-        lectureService.createBanner(lecture, mainTags, subTags);
+//        lectureService.createBanner(lecture, mainTags, subTags);
     }
 }

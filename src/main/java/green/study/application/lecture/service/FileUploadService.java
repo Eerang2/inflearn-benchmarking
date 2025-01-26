@@ -1,8 +1,8 @@
-package green.study.application.lecture;
+package green.study.application.lecture.service;
 
+import green.study.application.lecture.service.dto.FileRes;
 import green.study.domain.lecture.model.LectureImage;
 import green.study.domain.lecture.model.Video;
-import green.study.presentation.lecture.dto.FileRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

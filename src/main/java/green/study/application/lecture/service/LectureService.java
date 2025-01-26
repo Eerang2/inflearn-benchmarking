@@ -1,4 +1,4 @@
-package green.study.application.lecture;
+package green.study.application.lecture.service;
 
 import green.study.domain.lecture.entity.LectureEntity;
 import green.study.domain.lecture.entity.TagEntity;

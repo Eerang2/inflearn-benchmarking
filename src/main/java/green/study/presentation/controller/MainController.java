@@ -1,6 +1,6 @@
 package green.study.presentation.controller;
 
-import green.study.application.member.MemberService;
+import green.study.application.member.service.MemberService;
 import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.member.model.Member;
 import green.study.domain.model.GetToken;

@@ -1,4 +1,4 @@
-package green.study.application.member;
+package green.study.application.member.service;
 
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.exceptions.registers.MemberIdValidateException;

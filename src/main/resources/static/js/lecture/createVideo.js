@@ -89,7 +89,7 @@ document.getElementById('finish').addEventListener('click', () => {
     });
 
     // 메타데이터 추가
-    formData.append('postdata', JSON.stringify(metadata));
+    formData.append('metadata', JSON.stringify(metadata));
 
     // AJAX 요청
     $.ajax({

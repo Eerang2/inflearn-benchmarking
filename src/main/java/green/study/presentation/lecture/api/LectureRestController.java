@@ -2,8 +2,8 @@ package green.study.presentation.lecture.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import green.study.application.lecture.FileUploadService;
-import green.study.application.lecture.LectureService;
+import green.study.application.lecture.service.FileUploadService;
+import green.study.application.lecture.service.LectureService;
 import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.lecture.model.Chapter;
 import green.study.domain.lecture.model.LectureImage;
@@ -71,25 +71,25 @@ public class LectureRestController {
     }
 
     @PostMapping("/save/lecture-video")
-    public ResponseEntity<String> saveLectureVideoRelation(@RequestPart("postdata") String postData,
+    public ResponseEntity<String> saveLectureVideoRelation(@RequestPart("metadata") String postData,
                                                            @RequestPart("videoFiles") List<MultipartFile> videoFiles,
                                                            @GetToken Token token) throws IOException {
 
         validateToken(token);
-        List<LectureReq.ChapterDto> chapters = parseMetadata(postData);
+        List<LectureReq.Chapters> chapters = parseMetadata(postData);
 
         Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
         Long lectureKey = lectureService.findLectureByMemberKey(member.getKey());
 
-        processChapters(chapters, videoFiles, lectureKey);
+        saveChaptersAndVideos(chapters, videoFiles, lectureKey);
 
         return ResponseEntity.ok("Lecture saved successfully");
     }
 
 
 
-    // Json 객체 Java 객체로 parsing하는 메서드
-    private List<LectureReq.ChapterDto> parseMetadata(String postData) {
+    // Json 객체 Java 객체로 parsing 하는 메서드
+    private List<LectureReq.Chapters> parseMetadata(String postData) {
         try {
             return objectMapper.readValue(postData, new TypeReference<>() {});
         } catch (Exception e) {
@@ -98,13 +98,13 @@ public class LectureRestController {
     }
 
     // 챕터와 챕터영상들 저장 로직 메서드
-    private void processChapters(List<LectureReq.ChapterDto> chapters, List<MultipartFile> videoFiles, Long lectureKey) throws IOException {
+    private void saveChaptersAndVideos(List<LectureReq.Chapters> chapters, List<MultipartFile> videoFiles, Long lectureKey) throws IOException {
         int fileIndex = 0;
 
-        for (LectureReq.ChapterDto chapter : chapters) {
+        for (LectureReq.Chapters chapter : chapters) {
             Chapter savedChapter = lectureService.saveChapter(chapter.getChapterName(), lectureKey);
 
-            for (LectureReq.VideoDto video : chapter.getVideos()) {
+            for (LectureReq.VideoTitle video : chapter.getVideos()) {
                 MultipartFile videoFile = getVideoFile(videoFiles, fileIndex++);
                 Video uploadedVideo = fileUploadService.saveVideoToDisk(videoFile, video.getVideoTitle());
                 lectureService.saveVideo(uploadedVideo, savedChapter.getKey());
