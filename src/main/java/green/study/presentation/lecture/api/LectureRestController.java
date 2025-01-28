@@ -93,6 +93,7 @@ public class LectureRestController {
         try {
             return objectMapper.readValue(postData, new TypeReference<>() {});
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new InvalidMetadataException("Invalid metadata format", e);
         }
     }
@@ -115,6 +116,7 @@ public class LectureRestController {
     // Multipart data 존재여부 확인 후 배열값 반환
     private MultipartFile getVideoFile(List<MultipartFile> videoFiles, int index) {
         if (index >= videoFiles.size()) {
+            log.error("no video file found");
             throw new IllegalArgumentException("Video file count does not match metadata");
         }
         return videoFiles.get(index);
