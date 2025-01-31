@@ -27,6 +27,7 @@ public class MainController {
     @GetMapping("/")
     public String index(@GetToken Token token, Model model) {
         if (token != null) {
+            Token.validateToken(token);
             Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
             model.addAttribute("member", member);
         }

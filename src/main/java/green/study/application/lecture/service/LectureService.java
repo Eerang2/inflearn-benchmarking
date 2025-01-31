@@ -71,4 +71,8 @@ public class LectureService {
         descriptionRepository.save(description.toEntity());
     }
 
+    public List<Lecture> getFreeLectures() {
+        return null;
+    }
+
 }

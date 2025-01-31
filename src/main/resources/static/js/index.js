@@ -1,11 +1,57 @@
-// 카테고리 클릭 시 콘솔에 출력되는 간단한 JS 예시
-document.querySelectorAll('.category-item').forEach(item => {
-    item.addEventListener('click', function() {
-        alert(`"${this.textContent}" 카테고리를 선택했습니다.`);
+$(document).ready(function () {
+    // 0원 강의 API 호출
+    $.ajax({
+        url: '/api/recommend/free-backend-lectures', // 첫 번째 API 호출
+        method: 'GET',
+        success: function (data) {
+            const freeCoursesContainer = $('#freeCourses'); // 데이터를 삽입할 영역
+            data.lectures.forEach(lecture => {
+                const courseCard = `
+                    <div class="course-card">
+                        <img src="${lecture.imageUrl}" alt="${lecture.title}">
+                        <div class="details">
+                            <h3>${lecture.title}</h3>
+                            <p>${lecture.price}원</p>
+                        </div>
+                        <div class="hover-content">
+                            <h4>${lecture.title}</h4>
+                            <p>${lecture.description}</p>
+                        </div>
+                    </div>
+                `;
+                freeCoursesContainer.append(courseCard);
+            });
+        },
+        error: function () {
+            console.error('Failed to load free backend lectures.');
+        }
     });
-});
 
-// 배너 버튼 클릭 시 페이지 이동 예시 (현재는 예시로 위치 변경)
-document.querySelector('.banner button').addEventListener('click', function() {
-    window.location.href = '/';
+    // 추천 강의 API 호출
+    $.ajax({
+        url: '/api/recommend/new-lectures', // 두 번째 API 호출
+        method: 'GET',
+        success: function (data) {
+            const recommendedCoursesContainer = $('#recommendedCourses'); // 데이터를 삽입할 영역
+            data.lectures.forEach(lecture => {
+                const courseCard = `
+                    <div class="course-card">
+                        <img src="${lecture.imageUrl}" alt="${lecture.title}">
+                        <div class="details">
+                            <h3>${lecture.title}</h3>
+                            <p>${lecture.price}원</p>
+                        </div>
+                        <div class="hover-content">
+                            <h4>${lecture.title}</h4>
+                            <p>${lecture.description}</p>
+                        </div>
+                    </div>
+                `;
+                recommendedCoursesContainer.append(courseCard);
+            });
+        },
+        error: function () {
+            console.error('Failed to load recommended lectures.');
+        }
+    });
 });
