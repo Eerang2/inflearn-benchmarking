@@ -4,7 +4,7 @@ import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.exceptions.registers.MemberIdValidateException;
 import green.study.domain.member.exceptions.registers.PasswordValidateException;
 import green.study.domain.member.model.Member;
-import green.study.infrastructure.repository.MemberRepository;
+import green.study.infrastructure.member.repository.MemberRepository;
 import green.study.infrastructure.util.JwtUtil;
 import green.study.presentation.member.dto.MemberRes;
 import lombok.RequiredArgsConstructor;

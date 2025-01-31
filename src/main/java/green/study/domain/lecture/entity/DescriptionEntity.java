@@ -22,7 +22,7 @@ public class DescriptionEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(name = "lecture_key", nullable = false, unique = true)
+    @Column(name = "lecture_key", nullable = false)
     private Long lectureKey;
 
 

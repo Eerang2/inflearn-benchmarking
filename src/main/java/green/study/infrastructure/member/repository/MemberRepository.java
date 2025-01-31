@@ -1,8 +1,7 @@
-package green.study.infrastructure.repository;
+package green.study.infrastructure.member.repository;
 
 import green.study.domain.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

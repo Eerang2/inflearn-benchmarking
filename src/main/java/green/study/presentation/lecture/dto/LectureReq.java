@@ -47,7 +47,7 @@ public class LectureReq {
                     .description(description)
                     .image(LectureImage.builder()
                             .lectureImageName(imageName)
-                            .uniquePath(imageUniquePath)
+                            .path(imageUniquePath)
                             .build())
                     .memberKey(memberKey)
                     .build();

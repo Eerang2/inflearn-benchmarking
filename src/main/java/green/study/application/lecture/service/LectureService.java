@@ -5,7 +5,8 @@ import green.study.domain.lecture.entity.TagEntity;
 import green.study.domain.lecture.enums.MainTags;
 import green.study.domain.lecture.enums.SubTags;
 import green.study.domain.lecture.model.*;
-import green.study.infrastructure.*;
+import green.study.infrastructure.lecture.repository.*;
+import green.study.presentation.dto.LectureRes;
 import green.study.presentation.lecture.dto.LectureSubTagsRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class LectureService {
     private final DescriptionRepository descriptionRepository;
     private final ChapterRepository chapterRepository;
     private final VideoRepository videoRepository;
+    private final RecommendLectureRepository recommendLectureRepository;
 
     public List<LectureSubTagsRes> getSubCategories(MainTags mainCategory) {
         return Arrays.stream(SubTags.values())
@@ -71,8 +73,20 @@ public class LectureService {
         descriptionRepository.save(description.toEntity());
     }
 
-    public List<Lecture> getFreeLectures() {
-        return null;
+    public List<LectureRes> getFreeLectures() {
+        return recommendLectureRepository.findRandomFreeLectures()
+                .stream()
+                .map(lecture -> new LectureRes(
+                        lecture.getKey(),
+                        lecture.getTitle(),
+                        lecture.getPrice(),
+                        lecture.getImagePath(),
+                        lecture.getUniqueImageName(),
+                        lecture.getDescription(),
+                        lecture.getMemberKey()
+                ))
+                .collect(Collectors.toList());
     }
+
 
 }

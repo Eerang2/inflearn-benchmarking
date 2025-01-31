@@ -109,8 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     description: description.value,
                     price: price.value,
                     mainCategory: mainCategory.value,
-                    imageName: response.lectureImageName,
-                    imageUniquePath: response.uniquePath,
+                    imageName: response.uniqueName,
+                    imageUniquePath: response.path,
                     subTags: []
                 };
 

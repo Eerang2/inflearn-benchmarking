@@ -1,4 +1,4 @@
-package green.study.infrastructure;
+package green.study.infrastructure.lecture.repository;
 
 import green.study.domain.lecture.entity.LectureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class) // Auditing 기능 활성화
 public class LectureEntity {
 
     @Id
@@ -30,12 +35,21 @@ public class LectureEntity {
     private int price;
 
     @Column(nullable = false)
-    private String imageName;
+    private String uniqueImageName;
 
-    @Column(name = "image_unique_path",nullable = false)
-    private String imageUniquePath;
+    private int likeCount;
+
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createTime;
+
+    @Column(name = "image_path",nullable = false)
+    private String imagePath;
 
     @Column(name = "member_key", nullable = false)
     private Long memberKey;
+
+
+
 
 }

@@ -34,8 +34,8 @@ public class FileUploadService {
         // LectureImage 객체 반환
         return LectureImage.builder()
                 .lectureImageName(imageFile.getOriginalFilename())
-                .uniquePath(fileRes.getFileName())
-                .path(fileRes.getFilePath().toString()) // 절대 경로 반환
+                .uniqueName(fileRes.getFileName())
+                .path(IMAGE_UPLOAD_DIR) // 절대 경로 반환
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class FileUploadService {
         return Video.builder()
                 .videoName(videoFile.getOriginalFilename())
                 .title(videoName)
-                .uniquePath(fileRes.getFilePath().toString())
+                .uniquePath(VIDEO_UPLOAD_DIR)
                 .build();
 
     }

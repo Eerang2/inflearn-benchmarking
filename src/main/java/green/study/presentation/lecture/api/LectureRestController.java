@@ -49,6 +49,7 @@ public class LectureRestController {
 
         validateToken(token);
         Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
+        System.out.println(bannerReq.getImageUniquePath());
         lectureService.createBanner(bannerReq.toLecture(member.getKey()), bannerReq.getMainCategory(), bannerReq.getSubTags());
 
         //  : response.ok return

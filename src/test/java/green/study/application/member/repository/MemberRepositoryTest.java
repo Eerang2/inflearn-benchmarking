@@ -4,7 +4,7 @@ import green.study.application.member.service.MemberService;
 import green.study.domain.member.entity.MemberEntity;
 import green.study.domain.member.enums.MemberType;
 import green.study.domain.member.model.Member;
-import green.study.infrastructure.repository.MemberRepository;
+import green.study.infrastructure.member.repository.MemberRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

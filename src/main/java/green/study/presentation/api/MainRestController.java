@@ -1,7 +1,6 @@
 package green.study.presentation.api;
 
 import green.study.application.lecture.service.LectureService;
-import green.study.domain.lecture.model.Lecture;
 import green.study.presentation.dto.LectureRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,10 @@ public class MainRestController {
     private final LectureService lectureService;
     @GetMapping("/recommend/free-backend-lectures")
     public List<LectureRes> freeCourses(Model model) {
-        List<Lecture> freeLectures = lectureService.getFreeLectures();
-        return null;
+        List<LectureRes> freeLectures = lectureService.getFreeLectures();
+        System.out.println(freeLectures.get(0).getImagePath());
+        System.out.println(freeLectures.get(0).getImageUniqueName());
+        return freeLectures;
+
     }
 }
