@@ -17,11 +17,20 @@ public class LectureRepositoryImpl implements RecommendLectureRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<LectureEntity> findRandomFreeLectures() {
+    public List<LectureEntity> findFreeLectures() {
         return jpaQueryFactory
                 .selectFrom(lectureEntity)
                 .where(lectureEntity.price.eq(0))
                 .orderBy(lectureEntity.likeCount.desc())
+                .limit(5)
+                .fetch();
+    }
+
+    @Override
+    public List<LectureEntity> findRecentLectures() {
+        return jpaQueryFactory
+                .selectFrom(lectureEntity)
+                .orderBy(lectureEntity.createTime.desc())
                 .limit(5)
                 .fetch();
     }

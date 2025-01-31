@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -74,19 +75,30 @@ public class LectureService {
     }
 
     public List<LectureRes> getFreeLectures() {
-        return recommendLectureRepository.findRandomFreeLectures()
+        return recommendLectureRepository.findFreeLectures()
                 .stream()
-                .map(lecture -> new LectureRes(
-                        lecture.getKey(),
-                        lecture.getTitle(),
-                        lecture.getPrice(),
-                        lecture.getImagePath(),
-                        lecture.getUniqueImageName(),
-                        lecture.getDescription(),
-                        lecture.getMemberKey()
-                ))
+                .map(this::ToLectureRes)
                 .collect(Collectors.toList());
     }
 
+    public List<LectureRes> getRecentLectures() {
+        return recommendLectureRepository.findRecentLectures()
+                .stream()
+                .map(this::ToLectureRes)
+                .collect(Collectors.toList());
+    }
+
+
+    private LectureRes ToLectureRes(LectureEntity lectureEntity) {
+        return new LectureRes(
+                lectureEntity.getKey(),
+                lectureEntity.getTitle(),
+                lectureEntity.getPrice(),
+                lectureEntity.getImagePath(),
+                lectureEntity.getUniqueImageName(),
+                lectureEntity.getDescription(),
+                lectureEntity.getMemberKey()
+        );
+    }
 
 }

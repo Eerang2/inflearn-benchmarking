@@ -17,9 +17,14 @@ import java.util.List;
 public class MainRestController {
 
     private final LectureService lectureService;
-    @GetMapping("/recommend/free-backend-lectures")
-    public List<LectureRes> freeCourses() {
-        return lectureService.getFreeLectures();
 
+    @GetMapping("/recommend/free-backend-lectures")
+    public List<LectureRes> freeLectures() {
+        return lectureService.getFreeLectures();
+    }
+
+    @GetMapping("/recommend/new-lectures")
+    public List<LectureRes> recentLectures() {
+        return lectureService.getRecentLectures();
     }
 }

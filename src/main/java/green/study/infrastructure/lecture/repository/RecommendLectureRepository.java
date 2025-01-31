@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RecommendLectureRepository {
 
-    List<LectureEntity> findRandomFreeLectures();
+    List<LectureEntity> findFreeLectures();
+    List<LectureEntity> findRecentLectures();
 }

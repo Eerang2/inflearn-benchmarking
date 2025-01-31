@@ -38,10 +38,11 @@ $(document).ready(function () {
         method: 'GET',
         success: function (data) {
             const recommendedCoursesContainer = $('#recommendedCourses'); // 데이터를 삽입할 영역
-            data.lectures.forEach(lecture => {
-                const courseCard = `
+            if (Array.isArray(data)) {  // data가 배열인지 확인
+                data.forEach(lecture => {
+                    const courseCard = `
                     <div class="course-card">
-                        <img src="${lecture.imageUrl}" alt="${lecture.title}">
+                        <img src="images/banner/${lecture.imageUniqueName}" alt="${lecture.title}">
                         <div class="details">
                             <h3>${lecture.title}</h3>
                             <p>${lecture.price}원</p>
@@ -52,8 +53,11 @@ $(document).ready(function () {
                         </div>
                     </div>
                 `;
-                recommendedCoursesContainer.append(courseCard);
-            });
+                    recommendedCoursesContainer.append(courseCard);
+                });
+            } else {
+                console.error('Invalid data format, lectures not found.');
+            }
         },
         error: function () {
             console.error('Failed to load recommended lectures.');
