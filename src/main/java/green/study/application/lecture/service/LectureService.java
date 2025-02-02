@@ -62,6 +62,15 @@ public class LectureService {
         return lectureEntity.getKey();
     }
 
+    @Transactional
+    public List<Lecture> getAllLectures() {
+        return lectureRepository.findAll()
+                .stream()
+                .map(Lecture::from)
+                .collect(Collectors.toList());
+
+    }
+
     public final TagEntity saveMainTag(MainTags mainTag, long lectureKey) {
         return lectureTagsRepository.save(LectureTags.toMainTagEntity(mainTag, lectureKey));
     }
