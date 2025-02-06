@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,6 +70,27 @@ public class LectureService {
                 .map(Lecture::from)
                 .collect(Collectors.toList());
 
+    }
+
+    @Transactional
+    public List<Lecture> getLecturesByTag(String mainTag) {
+
+        List<TagEntity> byTagName = lectureTagsRepository.findByTagName(mainTag);
+        if (byTagName == null) {
+            return null;
+        }
+
+        List<Lecture> resultLectures = new ArrayList<>();
+        for (TagEntity tagEntity : byTagName) {
+            List<Lecture> lectures =
+                    lectureRepository.findAllByKey(tagEntity.getLectureKey())
+                                            .stream()
+                                            .map(Lecture::from)
+                                            .toList();
+
+            resultLectures.addAll(lectures);
+        }
+        return resultLectures;
     }
 
     public final TagEntity saveMainTag(MainTags mainTag, long lectureKey) {

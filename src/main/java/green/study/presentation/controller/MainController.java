@@ -81,15 +81,23 @@ public class MainController {
     }
 
     @GetMapping("/lectures")
-    public String lecturesForm(@GetToken Token token, @RequestParam(value = "tag", required = false) String tag, Model model) {
+    public String lecturesForm(@GetToken Token token,
+                               @RequestParam(value = "tag", required = false) String tag,
+                               Model model) {
 
         if (tag != null) {
+            List<Lecture> lecturesByTag = lectureService.getLecturesByTag(tag);
+            if (lecturesByTag.isEmpty()) {
+                model.addAttribute("lectures", null);
+            }
+            model.addAttribute("lectures", lecturesByTag);
+        } else {
+            List<Lecture> lectures = lectureService.getAllLectures();
+            model.addAttribute("lectures", lectures);
         }
-        List<Lecture> lectures = lectureService.getAllLectures();
-        model.addAttribute("lectures", lectures);
         if (token != null) {
             Token.validateToken(token);
-                Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
+            Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
             model.addAttribute("member", member);
         }
         return "lectures";

@@ -30,7 +30,7 @@ public class LectureServiceTest extends BaseTest {
                 .memberKey(1L)
                 .image(LectureImage.builder()
                         .lectureImageName("image1")
-                        .uniquePath("jsdisidna_image1.jpg")
+                        .uniqueName("jsdisidna_image1.jpg")
                         .path("/static/images/banner")
                         .build())
                 .price(1999999)

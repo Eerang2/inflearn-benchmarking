@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface LectureRepository extends JpaRepository<LectureEntity, Long> {
     Optional<LectureEntity> findByMemberKey(Long memberKey);
-    List<LectureEntity> findAllByMemberKey(Long memberKey);
+    List<LectureEntity> findAllByKey(Long memberKey);
+
 }
