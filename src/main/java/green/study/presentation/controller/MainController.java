@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -85,21 +83,15 @@ public class MainController {
                                @RequestParam(value = "tag", required = false) String tag,
                                Model model) {
 
-        if (tag != null) {
-            List<Lecture> lecturesByTag = lectureService.getLecturesByTag(tag);
-            if (lecturesByTag.isEmpty()) {
-                model.addAttribute("lectures", null);
-            }
-            model.addAttribute("lectures", lecturesByTag);
-        } else {
-            List<Lecture> lectures = lectureService.getAllLectures();
-            model.addAttribute("lectures", lectures);
-        }
-        if (token != null) {
-            Token.validateToken(token);
-            Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
-            model.addAttribute("member", member);
-        }
+        List<Lecture> lectures = (tag != null) ? lectureService.getLecturesByTag(tag) : lectureService.getAllLectures();
+
+        model.addAttribute("lectures", lectures.isEmpty() ? Collections.emptyList() : lectures);
+
+        Optional.ofNullable(token)
+                .map(Token::getToken)
+                .map(jwtUtil::getLoginUserFromAccessToken)
+                .ifPresent(member -> model.addAttribute("member", member));
+
         return "lectures";
     }
 
