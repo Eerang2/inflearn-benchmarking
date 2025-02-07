@@ -19,6 +19,9 @@
     flex-wrap: wrap;
 }
 .tag {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
     background-color: #f0f0f0;
     padding: 10px 15px;
     border-radius: 15px;
