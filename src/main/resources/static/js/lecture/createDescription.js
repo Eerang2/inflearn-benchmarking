@@ -6,7 +6,7 @@ document.getElementById('next').addEventListener('click', () => {
         return;
     }
     const postData = {
-        description: description,
+        content: description,
     };
     $.ajax({
         url: '/api/create/description',

@@ -46,6 +46,13 @@ public class LectureService {
             saveSubTags(subTag, save.getKey(), savedMainTag.getKey());
         }
     }
+
+    @Transactional
+    public void saveDescription(Description description) {
+        System.out.println(description.toString());
+        descriptionRepository.save(description.toEntity());
+    }
+
     @Transactional
     public Chapter saveChapter(String chapterName, long lectureKey) {
         Chapter lectureVideo = Chapter.builder().chapter(chapterName).lectureKey(lectureKey).build();
@@ -58,9 +65,8 @@ public class LectureService {
     }
 
     @Transactional
-    public Long findLectureByMemberKey(Long memberKey) {
-        LectureEntity lectureEntity = lectureRepository.findByMemberKey(memberKey).orElseThrow(RuntimeException::new);
-        return lectureEntity.getKey();
+    public Long findLatestLectureByMemberKey(Long memberKey) {
+        return lectureRepository.findLatestLectureKeyByMemberKey(memberKey).orElseThrow(RuntimeException::new);
     }
 
     @Transactional
@@ -99,10 +105,6 @@ public class LectureService {
 
     public final void saveSubTags(String subTag, long lectureKey, long mainTagKey) {
         lectureTagsRepository.save(LectureTags.toSubTagEntity(subTag, lectureKey, mainTagKey));
-    }
-
-    public void saveDescription(Description description) {
-        descriptionRepository.save(description.toEntity());
     }
 
     public List<LectureRes> getFreeLectures() {

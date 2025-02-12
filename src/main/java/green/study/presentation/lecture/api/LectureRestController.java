@@ -49,7 +49,6 @@ public class LectureRestController {
 
         validateToken(token);
         Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
-        System.out.println(bannerReq.getImageUniquePath());
         lectureService.createBanner(bannerReq.toLecture(member.getKey()), bannerReq.getMainCategory(), bannerReq.getSubTags());
 
         //  : response.ok return
@@ -62,12 +61,13 @@ public class LectureRestController {
     }
 
     @PostMapping("/create/description")
-    public ResponseEntity<String> createDescription(@RequestBody @Valid LectureReq.Description description,
+    public ResponseEntity<String> createDescription(@RequestBody @Valid LectureReq.DescriptionReq description,
                                                     @GetToken Token token) {
 
         validateToken(token);
-        Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
-        lectureService.saveDescription(description.toDescription(member.getKey()));
+        Long lectureKey = getLectureKey(token.getToken());
+
+        lectureService.saveDescription(description.toDescription(lectureKey));
         return ResponseEntity.ok("create description");
     }
 
@@ -79,8 +79,7 @@ public class LectureRestController {
         validateToken(token);
         List<LectureReq.Chapters> chapters = parseMetadata(postData);
 
-        Member member = jwtUtil.getLoginUserFromAccessToken(token.getToken());
-        Long lectureKey = lectureService.findLectureByMemberKey(member.getKey());
+        Long lectureKey = getLectureKey(token.getToken());
 
         saveChaptersAndVideos(chapters, videoFiles, lectureKey);
 
@@ -121,5 +120,10 @@ public class LectureRestController {
             throw new IllegalArgumentException("Video file count does not match metadata");
         }
         return videoFiles.get(index);
+    }
+
+    private Long getLectureKey(String token) {
+        Member member = jwtUtil.getLoginUserFromAccessToken(token);
+        return lectureService.findLatestLectureByMemberKey(member.getKey());
     }
 }

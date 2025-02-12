@@ -1,6 +1,7 @@
 package green.study.presentation.lecture.dto;
 
 import green.study.domain.lecture.enums.MainTags;
+import green.study.domain.lecture.model.Description;
 import green.study.domain.lecture.model.Lecture;
 import green.study.domain.lecture.model.LectureImage;
 import jakarta.validation.constraints.NotBlank;
@@ -59,14 +60,14 @@ public class LectureReq {
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Description {
+    public static class DescriptionReq {
 
         @NotBlank(message = "설명은 필수입니다.")
-        private String description;
+        private String content;
 
-        public green.study.domain.lecture.model.Description toDescription(Long lectureKey) {
-            return green.study.domain.lecture.model.Description.builder()
-                    .content(description)
+        public Description toDescription(Long lectureKey) {
+            return Description.builder()
+                    .content(content)
                     .lectureKey(lectureKey)
                     .build();
         }
