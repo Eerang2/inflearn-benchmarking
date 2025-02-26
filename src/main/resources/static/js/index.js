@@ -21,6 +21,7 @@ $(document).ready(function () {
                         </div>
                     </div>
                 `;
+
                     freeCoursesContainer.append(courseCard);
                 });
             } else {

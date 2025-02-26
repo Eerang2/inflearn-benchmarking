@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,23 +39,23 @@ public class LectureService {
 
     @Transactional
     public void createBanner(Lecture lecture, MainTags mainTag, List<String> subTags) {
-        LectureEntity save = lectureRepository.save(lecture.toEntity());
-        TagEntity savedMainTag = saveMainTag(mainTag, save.getKey());
-        for (String subTag : subTags) {
-            saveSubTags(subTag, save.getKey(), savedMainTag.getKey());
-        }
+        LectureEntity savedLecture = lectureRepository.save(lecture.toEntity());
+        TagEntity savedMainTag = lectureTagsRepository.save(LectureTags.toMainTagEntity(mainTag, savedLecture.getKey()));
+
+        subTags.forEach(subTag ->
+                lectureTagsRepository.save(LectureTags.toSubTagEntity(subTag, savedLecture.getKey(), savedMainTag.getKey()))
+        );
     }
 
     @Transactional
     public void saveDescription(Description description) {
-        System.out.println(description.toString());
         descriptionRepository.save(description.toEntity());
     }
 
     @Transactional
     public Chapter saveChapter(String chapterName, long lectureKey) {
-        Chapter lectureVideo = Chapter.builder().chapter(chapterName).lectureKey(lectureKey).build();
-        return Chapter.from(chapterRepository.save(lectureVideo.toEntity()));
+        Chapter chapter = Chapter.builder().chapter(chapterName).lectureKey(lectureKey).build();
+        return Chapter.from(chapterRepository.save(chapter.toEntity()));
     }
 
     @Transactional
@@ -64,74 +63,38 @@ public class LectureService {
         videoRepository.save(video.toEntity(video, chapterKey));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Long findLatestLectureByMemberKey(Long memberKey) {
-        return lectureRepository.findLatestLectureKeyByMemberKey(memberKey).orElseThrow(RuntimeException::new);
+        return lectureRepository.findLatestLectureKeyByMemberKey(memberKey)
+                .orElseThrow(() -> new RuntimeException("등록중에 에러가 발생했습니다."));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Lecture> getAllLectures() {
-        return lectureRepository.findAll()
-                .stream()
+        return lectureRepository.findAll().stream()
                 .map(Lecture::from)
                 .collect(Collectors.toList());
-
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Lecture> getLecturesByTag(String mainTag) {
-
-        List<TagEntity> byTagName = lectureTagsRepository.findByTagName(mainTag);
-        if (byTagName == null) {
-            return null;
-        }
-
-        List<Lecture> resultLectures = new ArrayList<>();
-        for (TagEntity tagEntity : byTagName) {
-            List<Lecture> lectures =
-                    lectureRepository.findAllByKey(tagEntity.getLectureKey())
-                                            .stream()
-                                            .map(Lecture::from)
-                                            .toList();
-
-            resultLectures.addAll(lectures);
-        }
-        return resultLectures;
+        return lectureTagsRepository.findByTagName(mainTag).stream()
+                .flatMap(tag -> lectureRepository.findAllByKey(tag.getLectureKey()).stream().map(Lecture::from))
+                .collect(Collectors.toList());
     }
 
-    public final TagEntity saveMainTag(MainTags mainTag, long lectureKey) {
-        return lectureTagsRepository.save(LectureTags.toMainTagEntity(mainTag, lectureKey));
-    }
-
-    public final void saveSubTags(String subTag, long lectureKey, long mainTagKey) {
-        lectureTagsRepository.save(LectureTags.toSubTagEntity(subTag, lectureKey, mainTagKey));
-    }
-
+    @Transactional(readOnly = true)
     public List<LectureRes> getFreeLectures() {
-        return recommendLectureRepository.findFreeLectures()
-                .stream()
-                .map(this::ToLectureRes)
+        return recommendLectureRepository.findFreeLectures().stream()
+                .map(LectureRes::from)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<LectureRes> getRecentLectures() {
-        return recommendLectureRepository.findRecentLectures()
-                .stream()
-                .map(this::ToLectureRes)
+        return recommendLectureRepository.findRecentLectures().stream()
+                .map(LectureRes::from)
                 .collect(Collectors.toList());
-    }
-
-
-    private LectureRes ToLectureRes(LectureEntity lectureEntity) {
-        return new LectureRes(
-                lectureEntity.getKey(),
-                lectureEntity.getTitle(),
-                lectureEntity.getPrice(),
-                lectureEntity.getImagePath(),
-                lectureEntity.getUniqueImageName(),
-                lectureEntity.getDescription(),
-                lectureEntity.getMemberKey()
-        );
     }
 
 }
