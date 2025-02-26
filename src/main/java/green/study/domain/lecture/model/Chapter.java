@@ -1,11 +1,15 @@
 package green.study.domain.lecture.model;
 
 import green.study.domain.lecture.entity.ChapterEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chapter {
     private Long key;
     private String chapter;
@@ -25,5 +29,10 @@ public class Chapter {
                 .chapter(chapter)
                 .lectureKey(lectureKey)
                 .build();
+    }
+
+    public Chapter(String chapter, Long lectureKey) {
+        this.chapter = chapter;
+        this.lectureKey = lectureKey;
     }
 }

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class LectureService {
 
     private final LectureRepository lectureRepository;
@@ -54,7 +55,7 @@ public class LectureService {
 
     @Transactional
     public Chapter saveChapter(String chapterName, long lectureKey) {
-        Chapter chapter = Chapter.builder().chapter(chapterName).lectureKey(lectureKey).build();
+        Chapter chapter = new Chapter(chapterName, lectureKey);
         return Chapter.from(chapterRepository.save(chapter.toEntity()));
     }
 
@@ -63,34 +64,30 @@ public class LectureService {
         videoRepository.save(video.toEntity(video, chapterKey));
     }
 
-    @Transactional(readOnly = true)
+    // 등록중인 강의키를 꺼내오는 메서드
     public Long findLatestLectureByMemberKey(Long memberKey) {
         return lectureRepository.findLatestLectureKeyByMemberKey(memberKey)
                 .orElseThrow(() -> new RuntimeException("등록중에 에러가 발생했습니다."));
     }
 
-    @Transactional(readOnly = true)
     public List<Lecture> getAllLectures() {
         return lectureRepository.findAll().stream()
                 .map(Lecture::from)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<Lecture> getLecturesByTag(String mainTag) {
         return lectureTagsRepository.findByTagName(mainTag).stream()
                 .flatMap(tag -> lectureRepository.findAllByKey(tag.getLectureKey()).stream().map(Lecture::from))
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<LectureRes> getFreeLectures() {
         return recommendLectureRepository.findFreeLectures().stream()
                 .map(LectureRes::from)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<LectureRes> getRecentLectures() {
         return recommendLectureRepository.findRecentLectures().stream()
                 .map(LectureRes::from)
